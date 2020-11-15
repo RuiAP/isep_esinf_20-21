@@ -66,8 +66,64 @@ public class Leitura implements Comparable {
         return totalCases;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getIsoCode() {
+        return isoCode;
+    }
+
+    public int getTotalDeaths() {
+        return totalDeaths;
+    }
+
+    public int getNewTests() {
+        return newTests;
+    }
+
+    public int getTotalTests() {
+        return totalTests;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public double getAged65orOLder() {
+        return aged65orOLder;
+    }
+
+    public double getCardiovascDeathRate() {
+        return cardiovascDeathRate;
+    }
+
+    public double getDiabetesPrevalence() {
+        return diabetesPrevalence;
+    }
+
+    public double getFemaleSmokers() {
+        return femaleSmokers;
+    }
+
+    public double getMaleSmokers() {
+        return maleSmokers;
+    }
+
+    public double getHospitalBedsPerThousand() {
+        return hospitalBedsPerThousand;
+    }
+
+    public double getLifeExpectancy() {
+        return lifeExpectancy;
+    }
+
     @Override
     public int compareTo(Object o) {
         return 0;
-    }
+    } //comparar por datas??
 }

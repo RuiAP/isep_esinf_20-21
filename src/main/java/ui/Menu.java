@@ -3,10 +3,12 @@ package ui;
 import controller.CarregarFicheiroController;
 import controller.*;
 import model.Constantes;
+import model.Leitura;
+import model.RegistoLeituras;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Menu {
 
@@ -43,18 +45,21 @@ public class Menu {
                 case 2:
                     Ponto2Controller c2 = new Ponto2Controller();
                     System.out.println(Constantes.TEXTO_FUNCIONALIDADE2+":\n");
-                    for (String resultado : c2.devolverResultados()) {
-                        System.out.println(resultado);
+                    LinkedList<Leitura> resultadoPonto2 = c2.devolverResultados();
+
+                    System.out.printf("%-10s %-20s %-20s %-15s %-15s %-10s\n","iso_code", "continent", "location","date", "total_cases", "mindays");
+                    for (Leitura l : resultadoPonto2){
+                        System.out.printf("%-10s %-20s %-20s %-15s %-15s %-10s\n", l.getIsoCode(), l.getContinent(), l.getCountry(), l.getDate().toString(), ""+l.getTotalCases(), ""+RegistoLeituras.contarDiasDesdeInicio(l));
                     }
                     break;
 
                 case 3:
                     Ponto3Controller c3 = new Ponto3Controller();
                     System.out.println(Constantes.TEXTO_FUNCIONALIDADE3+":\n");
-                    System.out.printf("%15s %15s %15s %15s\n","continent", "month", "new_cases", "new_deaths");
+                    System.out.printf("%-15s %-15s %-15s %-15s\n","continent", "month", "new_cases", "new_deaths");
                     for (String[] resultado : c3.devolverResultados()) {
                         for(int i = 0; i<4; i++){
-                            System.out.printf("%15s ", resultado[i]);
+                            System.out.printf("%-15s ", resultado[i]);
                         }
                         System.out.println();
                     }

@@ -47,6 +47,8 @@ public class CarregarFicheiroController {
         Scanner in = null;
         File teste;
         try {
+            TreeSet<String> continentesCarregados = new TreeSet<>();
+            TreeSet<String> paisesCarregados = new TreeSet<>();
 
             teste = new File(DATA_FILE_PATH);
             in = new Scanner(teste);
@@ -58,10 +60,16 @@ public class CarregarFicheiroController {
                 line = in.nextLine();
                 String[] dadosCSV = line.split(",");
 
+                //ou iterar só sobre os 3 primeiros indices
+                for(int i = 0; i<dadosCSV.length; i++){
+                    dadosCSV[i] = dadosCSV[i].replace("\"", "");
+                }
+
+
 
                 isoCode = dadosCSV[0].equalsIgnoreCase("NA")? ""+ REPLACEMENT_FOR_NA : dadosCSV[0];
                 continent = dadosCSV[1].equalsIgnoreCase("NA")? ""+REPLACEMENT_FOR_NA : dadosCSV[1];
-                country = dadosCSV[2].equalsIgnoreCase("NA")? ""+REPLACEMENT_FOR_NA : dadosCSV[1];
+                country = dadosCSV[2].equalsIgnoreCase("NA")? ""+REPLACEMENT_FOR_NA : dadosCSV[2];
                 date = LocalDate.parse(dadosCSV[3]);
                 totalCases = dadosCSV[4].equalsIgnoreCase("NA")? REPLACEMENT_FOR_NA : Integer.parseInt(dadosCSV[4]);
                 newCases = dadosCSV[5].equalsIgnoreCase("NA")? REPLACEMENT_FOR_NA : Integer.parseInt(dadosCSV[5]);
@@ -90,8 +98,14 @@ public class CarregarFicheiroController {
                 );
 
                  dadosCarregados.add(dadosLeitura);
+                 continentesCarregados.add(continent);
+                 paisesCarregados.add(country);
+
+
             }
             RegistoLeituras.carregarDadosFicheiro(dadosCarregados);
+            RegistoLeituras.setContinentesNasLeituras(continentesCarregados);
+            RegistoLeituras.setPaisesNasLeituras(paisesCarregados);
             return true;
 
         } catch (FileNotFoundException e) {

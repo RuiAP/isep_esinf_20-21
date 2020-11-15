@@ -8,6 +8,7 @@ import model.RegistoLeituras;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Menu {
@@ -68,8 +69,24 @@ public class Menu {
                 case 4:
                     Ponto4Controller c4 = new Ponto4Controller();
                     System.out.println(Constantes.TEXTO_FUNCIONALIDADE4+":\n");
-                    for (String resultado : c4.devolverResultados()) {
-                        System.out.println(resultado);
+                    LinkedList<Leitura> resultados = c4.devolverResultados(2, "Africa"); //fazer UI para user introduzir dados
+                    int dayBefore = 0;
+                    String novosCasos;
+                    for(Leitura l : resultados){
+
+                        if(l.getNewCases() == -1){
+                             novosCasos = "NA";
+                        }else{
+                             novosCasos = ""+l.getNewCases();
+                        }
+
+                        if (l.getDate().getDayOfMonth() > dayBefore){
+                            System.out.printf("%10s %s (%s)\n", "Day "+l.getDate().getDayOfMonth()+ " -->", l.getCountry(), novosCasos);
+                        }else{
+                            System.out.printf("%10s %s (%s)\n", "", l.getCountry(), novosCasos);
+                        }
+
+                        dayBefore = l.getDate().getDayOfMonth();
                     }
                     break;
 

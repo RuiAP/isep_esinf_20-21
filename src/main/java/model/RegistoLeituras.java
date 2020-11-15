@@ -2,12 +2,8 @@ package model;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RegistoLeituras {
 
@@ -57,4 +53,14 @@ public class RegistoLeituras {
         return (int) ChronoUnit.DAYS.between(dataInicio, l.getDate());
     }
 
+
+    public static LinkedList<Leitura> selecionaLeiturasMesContinente(int mes, String continente) {
+        LinkedList<Leitura> resultado = new LinkedList<>();
+        for(Leitura l : leituras){
+            if(l.getContinent().equalsIgnoreCase(continente) && l.getDate().getMonthValue() == mes){
+                resultado.add(l);
+            }
+        }
+        return resultado;
+    }
 }

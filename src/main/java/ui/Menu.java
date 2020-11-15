@@ -36,7 +36,7 @@ public class Menu {
                     if (c1.carregarFicheiro()) {
                         System.out.println("\nFicheiro carregado com sucesso.");
                     } else {
-                        System.out.println("\nErro ao carregar o ficheiro.");
+                        System.out.println("Ficheiro não carregado.");
                     }
                     break;
 
@@ -73,7 +73,7 @@ public class Menu {
                     break;
 
                 default:
-                    //alguma coisa?
+
 
             }
             System.out.println("\n\n");

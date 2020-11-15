@@ -2,13 +2,14 @@ package controller;
 
 import static model.Constantes.*;
 import model.Leitura;
+import model.RegistoLeituras;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.TreeSet;
 
 
 public class CarregarFicheiroController {
@@ -57,13 +58,11 @@ public class CarregarFicheiroController {
                 line = in.nextLine();
                 String[] dadosCSV = line.split(",");
 
-                String[] dadosData = dadosCSV[3].split("-");
-                LocalDate data = LocalDate.of(Integer.parseInt(dadosData[0]), Integer.parseInt(dadosData[1]), Integer.parseInt(dadosData[2]) );
 
                 isoCode = dadosCSV[0].equalsIgnoreCase("NA")? ""+ REPLACEMENT_FOR_NA : dadosCSV[0];
                 continent = dadosCSV[1].equalsIgnoreCase("NA")? ""+REPLACEMENT_FOR_NA : dadosCSV[1];
                 country = dadosCSV[2].equalsIgnoreCase("NA")? ""+REPLACEMENT_FOR_NA : dadosCSV[1];
-                date = data;
+                date = LocalDate.parse(dadosCSV[3]);
                 totalCases = dadosCSV[4].equalsIgnoreCase("NA")? REPLACEMENT_FOR_NA : Integer.parseInt(dadosCSV[4]);
                 newCases = dadosCSV[5].equalsIgnoreCase("NA")? REPLACEMENT_FOR_NA : Integer.parseInt(dadosCSV[5]);
                 totalDeaths = dadosCSV[6].equalsIgnoreCase("NA")? REPLACEMENT_FOR_NA : Integer.parseInt(dadosCSV[6]);
@@ -92,7 +91,7 @@ public class CarregarFicheiroController {
 
                  dadosCarregados.add(dadosLeitura);
             }
-
+            RegistoLeituras.carregarDadosFicheiro(dadosCarregados);
             return true;
 
         } catch (FileNotFoundException e) {

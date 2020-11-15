@@ -51,8 +51,12 @@ public class Menu {
                 case 3:
                     Ponto3Controller c3 = new Ponto3Controller();
                     System.out.println(Constantes.TEXTO_FUNCIONALIDADE3+":\n");
-                    for (String resultado : c3.devolverResultados()) {
-                        System.out.println(resultado);
+                    System.out.printf("%15s %15s %15s %15s\n","continent", "month", "new_cases", "new_deaths");
+                    for (String[] resultado : c3.devolverResultados()) {
+                        for(int i = 0; i<4; i++){
+                            System.out.printf("%15s ", resultado[i]);
+                        }
+                        System.out.println();
                     }
                     break;
 

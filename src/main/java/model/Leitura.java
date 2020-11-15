@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Leitura {
+public class Leitura implements Comparable {
 
     private String isoCode;
     private String continent;
@@ -48,7 +48,26 @@ public class Leitura {
         this.lifeExpectancy = lifeExpectancy;
     }
 
-    public LocalDate getTotalCases(){
-        return this.date;
+    public String getContinent(){
+        return this.continent;
+    }
+    public int getMonth(){
+        return date.getMonthValue();
+    }
+
+    public int getNewCases() {
+        return newCases;
+    }
+
+    public int getNewDeaths() {
+        return newDeaths;
+    }
+    public int getTotalCases(){
+        return totalCases;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

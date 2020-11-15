@@ -122,4 +122,29 @@ public class Leitura {
         return lifeExpectancy;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Leitura leitura = (Leitura) o;
+        return getTotalCases() == leitura.getTotalCases() &&
+                getNewCases() == leitura.getNewCases() &&
+                getTotalDeaths() == leitura.getTotalDeaths() &&
+                getNewDeaths() == leitura.getNewDeaths() &&
+                getNewTests() == leitura.getNewTests() &&
+                getTotalTests() == leitura.getTotalTests() &&
+                getPopulation() == leitura.getPopulation() &&
+                Double.compare(leitura.getAged65orOLder(), getAged65orOLder()) == 0 &&
+                Double.compare(leitura.getCardiovascDeathRate(), getCardiovascDeathRate()) == 0 &&
+                Double.compare(leitura.getDiabetesPrevalence(), getDiabetesPrevalence()) == 0 &&
+                Double.compare(leitura.getFemaleSmokers(), getFemaleSmokers()) == 0 &&
+                Double.compare(leitura.getMaleSmokers(), getMaleSmokers()) == 0 &&
+                Double.compare(leitura.getHospitalBedsPerThousand(), getHospitalBedsPerThousand()) == 0 &&
+                Double.compare(leitura.getLifeExpectancy(), getLifeExpectancy()) == 0 &&
+                getIsoCode().equals(leitura.getIsoCode()) &&
+                getContinent().equals(leitura.getContinent()) &&
+                getCountry().equals(leitura.getCountry()) &&
+                getDate().equals(leitura.getDate());
+    }
+
 }

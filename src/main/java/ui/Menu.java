@@ -1,14 +1,9 @@
 package ui;
 
-import controller.CarregarFicheiroController;
-import controller.*;
 import model.Constantes;
-import model.Leitura;
-import model.RegistoLeituras;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Menu {
@@ -34,72 +29,31 @@ public class Menu {
             switch (opcao) {
 
                 case 1:
-                    CarregarFicheiroController c1 = new CarregarFicheiroController();
-
-                    if (c1.carregarFicheiro()) {
-                        System.out.println("\nFicheiro carregado com sucesso.");
-                    } else {
-                        System.out.println("Ficheiro não carregado.");
-                    }
+                    Ponto1ui u1 = new Ponto1ui();
+                    u1.display();
                     break;
 
                 case 2:
-                    Ponto2Controller c2 = new Ponto2Controller();
-                    System.out.println(Constantes.TEXTO_FUNCIONALIDADE2+":\n");
-                    LinkedList<Leitura> resultadoPonto2 = c2.devolverResultados();
-
-                    System.out.printf("%-10s %-20s %-20s %-15s %-15s %-10s\n","iso_code", "continent", "location","date", "total_cases", "mindays");
-                    for (Leitura l : resultadoPonto2){
-                        System.out.printf("%-10s %-20s %-20s %-15s %-15s %-10s\n", l.getIsoCode(), l.getContinent(), l.getCountry(), l.getDate().toString(), ""+l.getTotalCases(), ""+RegistoLeituras.contarDiasDesdeInicio(l));
-                    }
+                    Ponto2ui u2 = new Ponto2ui();
+                    u2.display();
                     break;
 
                 case 3:
-                    Ponto3Controller c3 = new Ponto3Controller();
-                    System.out.println(Constantes.TEXTO_FUNCIONALIDADE3+":\n");
-                    System.out.printf("%-15s %-15s %-15s %-15s\n","continent", "month", "new_cases", "new_deaths");
-                    for (String[] resultado : c3.devolverResultados()) {
-                        for(int i = 0; i<4; i++){
-                            System.out.printf("%-15s ", resultado[i]);
-                        }
-                        System.out.println();
-                    }
+                    Ponto3ui u3 = new Ponto3ui();
+                    u3.display();
                     break;
 
                 case 4:
-                    Ponto4Controller c4 = new Ponto4Controller();
-                    System.out.println(Constantes.TEXTO_FUNCIONALIDADE4+":\n");
-                    LinkedList<Leitura> resultados = c4.devolverResultados(2, "Africa"); //fazer UI para user introduzir dados
-                    int dayBefore = 0;
-                    String novosCasos;
-                    for(Leitura l : resultados){
-
-                        if(l.getNewCases() == -1){
-                             novosCasos = "NA";
-                        }else{
-                             novosCasos = ""+l.getNewCases();
-                        }
-
-                        if (l.getDate().getDayOfMonth() > dayBefore){
-                            System.out.printf("%10s %s (%s)\n", "Day "+l.getDate().getDayOfMonth()+ " -->", l.getCountry(), novosCasos);
-                        }else{
-                            System.out.printf("%10s %s (%s)\n", "", l.getCountry(), novosCasos);
-                        }
-
-                        dayBefore = l.getDate().getDayOfMonth();
-                    }
+                    Ponto4ui u4 = new Ponto4ui();
+                    u4.display();
                     break;
 
                 case 5:
-                    Ponto5Controller c5 = new Ponto5Controller();
-                    System.out.println(Constantes.TEXTO_FUNCIONALIDADE5+":\n");
-                    for (String resultado : c5.devolverResultados()) {
-                        System.out.println(resultado);
-                    }
+                    Ponto5ui u5 = new Ponto5ui();
+                    u5.display();
                     break;
 
                 default:
-
 
             }
             System.out.println("\n\n");
@@ -114,12 +68,10 @@ public class Menu {
 
     private int displayAndReadOption(ArrayList<String> listaOpcoes){
 
-
         for (String s : listaOpcoes){
             System.out.println(s);
         }
         System.out.println("Selecione a opção pretendida:");
-
 
         try
         {
@@ -145,7 +97,6 @@ public class Menu {
             return -1;
         }
     }
-
 
 
 }

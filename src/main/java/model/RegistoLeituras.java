@@ -8,16 +8,18 @@ import java.util.*;
 public class RegistoLeituras {
 
 
-    private static ArrayList<Leitura> leituras;
+
+    private static LinkedList<Leitura> leituras;
     private static TreeSet<String> continentesNasLeituras;
     private static TreeSet<String> paisesNasLeituras;
 
 
-    public static void carregarDadosFicheiro(ArrayList<Leitura> dados) {
+
+    public static void carregarDadosFicheiro(LinkedList<Leitura> dados) {
         RegistoLeituras.leituras = dados;
     }
 
-    public static ArrayList<Leitura> getLeituras() {
+    public static LinkedList<Leitura> getLeituras() {
         return leituras;
     }
 
@@ -62,5 +64,15 @@ public class RegistoLeituras {
             }
         }
         return resultado;
+    }
+
+    public static int totalNovasMortesPorPais(String country) {
+        int somatorioNovasMortes = 0;
+        for (Leitura l : leituras){
+            if(l.getCountry().equalsIgnoreCase(country)){
+                somatorioNovasMortes += l.getNewDeaths();
+            }
+        }
+        return somatorioNovasMortes;
     }
 }

@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Leitura implements Comparable {
+public class Leitura {
 
     private String isoCode;
     private String continent;
@@ -122,8 +122,4 @@ public class Leitura implements Comparable {
         return lifeExpectancy;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    } //comparar por datas??
 }

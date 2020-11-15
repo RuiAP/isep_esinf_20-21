@@ -7,9 +7,7 @@ import model.RegistoLeituras;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 
 public class CarregarFicheiroController {
@@ -42,7 +40,7 @@ public class CarregarFicheiroController {
 
     public boolean carregarFicheiro(){
 
-        ArrayList<Leitura> dadosCarregados = new ArrayList<>();
+        LinkedList<Leitura> dadosCarregados = new LinkedList<>();
 
         Scanner in = null;
         File teste;

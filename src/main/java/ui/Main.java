@@ -8,7 +8,6 @@ public class Main{
         Menu novoMenu = new Menu();
         novoMenu.runApp();
 
-
     }
 
 

@@ -2,14 +2,13 @@ package controller;
 
 import model.Leitura;
 import model.RegistoLeituras;
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 
 public class Ponto3Controller {
 
-    public ArrayList<Leitura> leituras;
+    public LinkedList<Leitura> leituras;
 
     public Ponto3Controller(){
         leituras = RegistoLeituras.getLeituras();

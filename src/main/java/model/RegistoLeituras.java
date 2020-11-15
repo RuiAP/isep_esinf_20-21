@@ -50,6 +50,11 @@ public class RegistoLeituras {
         return null;
         }
 
+    /**
+     * Devolve o numero de dias entre 2020-01-01 (inicio da pandemia) e a data da Leitura passada por parametro.
+     * @param l Leitura que contém a data a comparar com 2020-01-01
+     * @return int contendo o numero de dias entre as datas
+     */
     public static int contarDiasDesdeInicio(Leitura l){
         LocalDate dataInicio = LocalDate.parse("2020-01-01");
         return (int) ChronoUnit.DAYS.between(dataInicio, l.getDate());

@@ -7,7 +7,6 @@ import java.util.*;
 
 public class Ponto4Controller {
 
-    //o mes e o continente são escolhidos pelo utilizador??
 
     private TreeSet<String> paises;
     private TreeSet<String> continentes;

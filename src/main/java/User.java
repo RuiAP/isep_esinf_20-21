@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class User {
 
     private String userId;
@@ -41,6 +43,21 @@ public class User {
                 ", age=" + age +
                 ", city='" + city + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getAge() == user.getAge() &&
+                Objects.equals(getUserId(), user.getUserId()) &&
+                Objects.equals(getCity(), user.getCity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId(), getAge(), getCity());
     }
 }
 

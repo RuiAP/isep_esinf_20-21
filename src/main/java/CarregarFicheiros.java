@@ -16,7 +16,7 @@ public class CarregarFicheiros {
 
     public LinkedList<User> uploadUsers(){
 
-        LinkedList<User> userCarregados = new LinkedList<>();
+        LinkedList<User> usersCarregados = new LinkedList<>();
 
         Scanner in = null;
 
@@ -29,21 +29,21 @@ public class CarregarFicheiros {
                 String[] dados = line.split(",");
 
                 User tempUser = new User(dados[0], Integer.parseInt(dados[1]), dados[2]);
-               userCarregados.add(tempUser);
+               usersCarregados.add(tempUser);
             }
 
-            return userCarregados;
+            return usersCarregados;
 
         } catch (FileNotFoundException e) {
             System.out.println("Ficheiro de dados não encontrado.");
         } catch (NumberFormatException e) {
-            System.out.println("Erro ao ler a linha " + userCarregados.size()+".");
+            System.out.println("Erro ao ler a linha " + usersCarregados.size()+".");
         } catch (Exception e) {
             System.out.println("Erro ao ler o ficheiro.");
         }finally {
             if(in != null) in.close();
         }
-        return (LinkedList) Collections.emptyList();
+        return usersCarregados;
     }
 
 
@@ -84,7 +84,7 @@ public class CarregarFicheiros {
         }finally {
             if(in != null) in.close();
         }
-        return (LinkedList) Collections.emptyList();
+        return countriesCarregados;
     }
 
 

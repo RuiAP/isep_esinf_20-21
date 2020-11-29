@@ -1,3 +1,5 @@
+package TP2;
+
 import java.util.Objects;
 
 public class Country {
@@ -85,7 +87,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" +
+        return "TP2.Country{" +
                 "countryName='" + countryName + '\'' +
                 ", continent='" + continent + '\'' +
                 ", population=" + population +

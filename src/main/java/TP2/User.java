@@ -1,3 +1,5 @@
+package TP2;
+
 import java.util.Objects;
 
 public class User {
@@ -38,7 +40,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "TP2.User{" +
                 "user_name='" + userId + '\'' +
                 ", age=" + age +
                 ", city='" + city + '\'' +

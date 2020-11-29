@@ -65,7 +65,6 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
             E[][] temp = (E[][]) new Object [newSize][newSize];
             for (int i = 0; i < edgeMatrix.length; i++)
                 temp[i] = Arrays.copyOf(edgeMatrix[i], newSize);
-	    
             edgeMatrix = temp;
 	}
     }
@@ -378,7 +377,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
         sb.append("\nMatrix:\n");
 
-        sb.append("  ");
+        sb.append("   ");
         for (int i = 0 ; i < numVertices ; i++)
         {
             sb.append(" |  "+ i + " ");
@@ -388,7 +387,12 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
         // aligned only when vertices < 10
         for (int i = 0 ; i < numVertices ; i++)
         {
-            sb.append(" "+ i + " ");
+            if(i<10){
+                sb.append("  "+ i + " ");
+            }
+            else{
+                sb.append(" "+ i + " ");
+            }
             for (int j = 0 ; j < numVertices ; j++)
                 if(edgeMatrix[i][j] != null)
                     sb.append("|  X  ");

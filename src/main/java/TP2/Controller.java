@@ -32,7 +32,7 @@ public class Controller {
         }
         countriesGraph = cf.carregarGrafoCountries();
         usersGraph = cf.carregarGrafoUsers();
-       return true; //falta validação para não dar erro e confirmação ao mesmo tempo
+       return true; //falta validação para não dar um erro e uma confirmação ao mesmo tempo
     }
 
 
@@ -160,6 +160,12 @@ public class Controller {
     }
 
 
+    //only to be used by unit tests
+    private void setCountriesGraph(Graph<Country, String> countriesGraph) {
+        this.countriesGraph = countriesGraph;
+    }
 
-
+    private void setUsersGraph(AdjacencyMatrixGraph<User, Double> usersGraph) {
+        this.usersGraph = usersGraph;
+    }
 }

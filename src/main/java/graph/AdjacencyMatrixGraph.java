@@ -424,6 +424,60 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     }
 
     /**
+     * Alternative representation of the graph. Includes edge weight.
+     * Matrix only represents existence of Edge
+     */
+    public String toString2() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Vertices:\n");
+        for (int i = 0 ; i < numVertices ; i++)
+            sb.append(vertices.get(i)+"\n");
+
+        sb.append("\nMatrix:\n");
+
+        sb.append("   ");
+        for (int i = 0 ; i < numVertices ; i++)
+        {
+            if(i<10)
+                sb.append(" |  "+ i + " ");
+            else
+                sb.append(" | "+ i + " ");
+        }
+        sb.append("\n");
+
+        for (int i = 0 ; i < numVertices ; i++)
+        {
+            if(i<10){
+                sb.append("  "+ i + " ");
+            }
+            else{
+                sb.append(" "+ i + " ");
+            }
+            for (int j = 0 ; j < numVertices ; j++)
+                if(edgeMatrix[i][j] != null)
+
+                    sb.append("| "+this.getEdge(vertices.get(i), vertices.get(j))+" ");
+                else
+                    sb.append("|     ");
+            sb.append("\n");
+        }
+        /*
+        sb.append("\nEdges:\n");
+
+        for (int i = 0; i < numVertices ; i++)
+            for (int j = 0 ; j < numVertices; j++)
+                if (edgeMatrix[i][j] != null)
+                    sb.append("From " + i + " to " + j + "-> "+ edgeMatrix[i][j] + "\n");
+
+        sb.append("\n");
+
+         */
+
+        return sb.toString();
+    }
+
+    /**
      * Returns a clone of the graph (a shallow copy).
      * 
      * @return the new cloned graph  

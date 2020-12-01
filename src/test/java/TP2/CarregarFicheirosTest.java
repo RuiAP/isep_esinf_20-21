@@ -1,5 +1,5 @@
+package TP2;
 
-import TP2.*;
 import TP2.model.Country;
 import TP2.model.User;
 import graph.AdjacencyMatrixGraph;
@@ -97,7 +97,7 @@ public class CarregarFicheirosTest {
     }
 
     @Test
-    @Ignore("not applicable")
+    @Ignore()
     public void calculateDistanceBetween(){
         //valores parecem divergir ligeiramente dos retornados no site
         //http://www.movable-type.co.uk/scripts/latlong.html

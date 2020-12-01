@@ -59,7 +59,16 @@ public class GraphAlgorithmsAdjMatrix {
      * @return queue of vertices found by search (empty if none), null if vertex does not exist
      */
     public static <V,E> LinkedList<V> DFS(AdjacencyMatrixGraph<V,E> graph, V vertex) {
-     throw new UnsupportedOperationException("Not supported yet.");	
+
+        V vAtual = vertex;
+        if(graph.directConnections(vAtual) == null){
+            return null;
+        }
+        LinkedList<V> verticesQueue = new LinkedList<>();
+            DFS(graph, graph.toIndex(vertex), verticesQueue);
+
+        return verticesQueue;
+
     }
 
     /**
@@ -71,7 +80,15 @@ public class GraphAlgorithmsAdjMatrix {
      *
      */
     static <V,E> void DFS(AdjacencyMatrixGraph<V,E> graph, int index, LinkedList<V> verticesQueue) {
-    		throw new UnsupportedOperationException("Not supported yet.");	
+
+        V vAtual = graph.vertices.get(index);
+        verticesQueue.add(vAtual);
+
+        for(V v : graph.directConnections(vAtual)){
+            if(!verticesQueue.contains(v)){
+                DFS(graph, graph.toIndex(v), verticesQueue);
+            }
+        }
     }
     
 
@@ -84,7 +101,32 @@ public class GraphAlgorithmsAdjMatrix {
      * @return the new graph 
      */
     public static <V, E> AdjacencyMatrixGraph<V, E> transitiveClosure(AdjacencyMatrixGraph<V, E> graph, E dummyEdge){
-            throw new UnsupportedOperationException("Not supported yet.");	
+
+        AdjacencyMatrixGraph<V,E> newGraph = (AdjacencyMatrixGraph<V,E>) graph.clone();
+
+        for (int i = 0; i<graph.numVertices; i++){
+            for (int j = 0; j<graph.numVertices; j++){
+
+                if( i != j && graph.edgeMatrix[j][i] != null){
+
+                    for (int k = 0; k< graph.numVertices(); k++){
+                       if (i != k && j != k && graph.edgeMatrix[i][k] != null){
+                            newGraph.insertEdge(graph.vertices.get(k), graph.vertices.get(j), dummyEdge);
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+        return newGraph;
+
+
+
+
+
+
     }
 
 }

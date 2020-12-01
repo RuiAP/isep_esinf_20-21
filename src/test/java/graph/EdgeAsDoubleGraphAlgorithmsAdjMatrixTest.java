@@ -55,6 +55,7 @@ public class EdgeAsDoubleGraphAlgorithmsAdjMatrixTest {
 
 	}
 
+	@Test
 	public void testShortestPath() {
 		System.out.println("Test of shortest path");
 		

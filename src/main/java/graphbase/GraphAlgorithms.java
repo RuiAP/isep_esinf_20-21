@@ -3,10 +3,7 @@
 */
 package graphbase;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 
 
 /**
@@ -133,53 +130,55 @@ public class GraphAlgorithms {
     protected static<V,E> void shortestPathLength(Graph<V,E> g, V vOrig, 
                                     boolean[] visited, V[] pathKeys, double[] dist){
 
-        vOrig = (V) "Braga";
-        V[] relationkeyVertice = (V[]) new Object[g.numVertices()];
-        int verticeKey;
-        for (V vertice : g.vertices()){
-            verticeKey = g.getKey(vertice);
 
-            visited[verticeKey] = false;
-            dist[verticeKey] = Double.MAX_VALUE;
-            pathKeys[verticeKey] = null;
-            relationkeyVertice[verticeKey] = vertice;
+        for (int i= 0; i<dist.length;i++){
+            dist[i] =(double) Double.MAX_VALUE;
+            pathKeys[i] = null;
         }
 
+        pathKeys[g.getKey(vOrig)] = vOrig;
         dist[g.getKey(vOrig)] = 0;
-        //visited[g.getKey(vOrig)] = true;
 
-        while(!visited[g.getKey(vOrig)]){
-            visited[g.getKey(vOrig)] = true;
 
-            for(V vAdj : g.adjVertices(vOrig)){
-                Edge<V,E> edge = g.getEdge(vOrig, vAdj);
-                if(!visited[g.getKey(vAdj)] && dist[g.getKey(vAdj)] > dist[g.getKey(vOrig)]+edge.getWeight() ){
-                    dist[g.getKey(vAdj)] = dist[g.getKey(vOrig)]+edge.getWeight();
-                    pathKeys[g.getKey(vAdj)] = vOrig;
+        V verticeAtual = vOrig;
+
+        while(verticeAtual != null) {
+            visited[g.getKey(verticeAtual)] = true;
+
+            for (V vAdj : g.adjVertices(verticeAtual)) {
+
+                if (!visited[g.getKey(vAdj)] && dist[g.getKey(vAdj)] > dist[g.getKey(verticeAtual)] + g.getEdge(verticeAtual, vAdj).getWeight()) {
+                    dist[g.getKey(vAdj)] = dist[g.getKey(verticeAtual)] + g.getEdge(verticeAtual, vAdj).getWeight();
+                    pathKeys[g.getKey(vAdj)] = verticeAtual;
                 }
             }
 
-
-            //vOrig = getVertMinDist(dist, visited);
-            double min = dist[0];
-            int indexOfmin = 0;
-
-            for(int i = 0; i<visited.length; i++){
-                if(!visited[i]){
-                    if(dist[i]<=min){
-                        indexOfmin = i;
-                    }
+            double min = Double.MAX_VALUE;
+            int minIndex = -1;
+            for(int i = 0; i<dist.length; i++){
+                if(!visited[i] && dist[i]< min){
+                    min= dist[i];
+                    minIndex = i;
                 }
             }
 
-            vOrig = relationkeyVertice[indexOfmin];
+            V[] relacao = pathKeys.clone();
+            for(V v : g.vertices()){
+                relacao[g.getKey(v)] = v;
+            }
 
+            if(minIndex == -1){
+                verticeAtual = null;
+            }else{
+                verticeAtual = relacao[minIndex];
+
+            }
+            }
         }
 
 
 
-    }
-    
+
     /**
     * Extracts from pathKeys the minimum path between voInf and vdInf
     * The path is constructed from the end to the beginning
@@ -189,13 +188,33 @@ public class GraphAlgorithms {
     * @param pathkeys minimum path vertices keys  
     * @param path stack with the minimum path (correct order)
     */
-    protected static<V,E> void getPath(Graph<V,E> g, V vOrig, V vDest, V[] pathKeys, LinkedList<V> path){
-    
-       throw new UnsupportedOperationException("Not supported yet.");
+    protected static<V,E> void getPath(Graph<V,E> g, V vOrig, V vDest, V[] pathKeys, LinkedList<V> path) {
+
+
+        if (vOrig.equals(vDest)) {
+            path.add(vOrig);
+        } else {
+
+            path.add(vDest);
+            V vAtual = vDest;
+            while (vAtual != vOrig) {
+                path.add(pathKeys[g.getKey(vAtual)]);
+                vAtual = pathKeys[g.getKey(vAtual)];
+            }
+
+        }
     }
 
     //shortest-path between vOrig and vDest
     public static<V,E> double shortestPath(Graph<V,E> g, V vOrig, V vDest, LinkedList<V> shortPath){
+        //Acho que ambos os metodos publicos são independentes (simplesmente ambos usam o metodo do dijkstra)
+        //ambos criam os arrays distance, apthkeys, etc e chamam dijkstra
+        //podem usar o getPath ou não
+
+
+        //-------------------------------------
+        //este deve ser para chamar o dijkstra e depois chamar o getPath
+
         throw new UnsupportedOperationException("Not supported yet.");
 
 
@@ -207,26 +226,30 @@ public class GraphAlgorithms {
         double[] distances = new double[g.numVertices()];
         V[] pathkeys = (V[]) new Object[g.numVertices()];
 
+        //invocas o metodo do dijkstra o que te atualiza os arrays com os dados
         shortestPathLength(g,vOrig,visited,pathkeys,distances);
 
-        for (V vertice : g.vertices()){
-            LinkedList<V> caminho = new LinkedList<>();
-            //vamos de vOrig até ao vertice
-            V verticeAtual = vertice;
-            //começamos pelo "fim". Vamos a pathkey e encontramos o vertice. Depois seguimos os saltos até chegar a vOrig
-            //se o primeiro for o vOrig ele passa o cilco while à frente e nao devia
-            while (verticeAtual != vOrig){
-                caminho.add(verticeAtual);
-                verticeAtual = pathkeys[g.getKey(verticeAtual)];
-            }
 
-            //depois revertemos o caminho com o revPath
-            LinkedList<V> caminhoOrdenado = revPath(caminho);
+        //atualiza o ArrayList dists com as distancias
+        //ou percebi algo mal ou não faz sentido este metodo receber uma Arraylist quando o metodo do dijkstra recebe um array(de double primitivos ainda por cima)
+        for (int i = 0; i<distances.length; i++){
+                dists.add(distances[i]);
 
-            //depois adicionamos a paths
-            paths.add(caminho);
         }
 
+        for (V vertice : g.vertices()) {
+
+                LinkedList<V> caminho = new LinkedList<>();
+
+                getPath(g, vOrig, vertice, pathkeys, caminho);
+
+                //ordenar o caminho de vOrig até vDest
+                caminho = revPath(caminho);
+            System.out.println(caminho);
+                //adiciona caminho à lista
+                paths.add(caminho);
+
+        }
             return true;
     }
     

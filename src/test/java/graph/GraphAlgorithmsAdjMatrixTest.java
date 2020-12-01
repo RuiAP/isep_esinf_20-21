@@ -165,7 +165,36 @@ public class GraphAlgorithmsAdjMatrixTest {
 
 	@Test
 	public void testTransitiveClosure() {
-		fail("Not implemented yet.");	
+		AdjacencyMatrixGraph <String, String> transitiveTestMap = new AdjacencyMatrixGraph<>();
+
+		transitiveTestMap.insertVertex("Porto");
+		transitiveTestMap.insertVertex("Braga");
+		transitiveTestMap.insertVertex("Vila Real");
+		transitiveTestMap.insertVertex("Aveiro");
+		transitiveTestMap.insertVertex("Coimbra");
+
+		transitiveTestMap.insertEdge("Porto", "Braga", "A1");
+		transitiveTestMap.insertEdge("Braga", "Vila Real", "A1");
+		transitiveTestMap.insertEdge("Vila Real", "Aveiro", "A1");
+		transitiveTestMap.insertEdge("Vila Real", "Coimbra", "A1");
+		transitiveTestMap.insertEdge("Aveiro", "Braga", "A1");
+		transitiveTestMap.insertEdge("Coimbra", "Aveiro", "A1");
+
+		System.out.println(transitiveTestMap);
+		transitiveTestMap = GraphAlgorithmsAdjMatrix.transitiveClosure(transitiveTestMap,"A2");
+		System.out.println(transitiveTestMap);
+
+
+
+    	/*
+		System.out.println(completeMap);
+		//completeMap.insertEdge("Porto", "Lisboa", "A111");
+
+		completeMap = GraphAlgorithmsAdjMatrix.transitiveClosure(completeMap, "A111");
+		System.out.println(completeMap);
+
+		 */
+
 	}
 
 }

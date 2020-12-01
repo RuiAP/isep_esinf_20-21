@@ -19,9 +19,58 @@ public class EdgeAsDoubleGraphAlgorithms {
      * @param minDist minimum distances in the path
      *
      */
-    private static <V> void shortestPath(AdjacencyMatrixGraph<V,Double> graph, int sourceIdx, boolean[] knownVertices, int[] verticesIndex, double [] minDist){  
-        throw new UnsupportedOperationException("Not supported yet.");
+    private static <V> void shortestPath(AdjacencyMatrixGraph<V,Double> graph, int sourceIdx, boolean[] knownVertices, int[] verticesIndex, double [] minDist){
+
+        int idxAtual = sourceIdx;
+        minDist[sourceIdx] = 0;
+        LinkedList<Integer> auxQueue = new LinkedList<>();
+
+        auxQueue.add(idxAtual);
+        while(!auxQueue.isEmpty()){
+            knownVertices[idxAtual] = true;
+            auxQueue.poll();
+
+            V vAtual = graph.vertices.get(idxAtual);
+            //for(int i = 0; i<graph.numVertices();i++ ){
+                for( V v :graph.directConnections(graph.vertices.get(idxAtual))){
+                    int adjIdx = graph.toIndex(v);
+                    if(!knownVertices[adjIdx] && minDist[adjIdx] > minDist[idxAtual] + graph.getEdge(vAtual, v)){
+                        verticesIndex[adjIdx] = idxAtual;
+                        minDist[adjIdx] = minDist[idxAtual] + graph.getEdge(vAtual, v);
+                        auxQueue.add(adjIdx);
+                    }
+            //}
+
+                    if (!auxQueue.isEmpty()){
+                        idxAtual = auxQueue.peekFirst();
+
+                    }
+
+
+
+                }
+            }
+
+
+/*
+
+            int flag = 0;
+            for(int i = 0; i<knownVertices.length; i++){
+                if(!knownVertices[i]){
+                    idxAtual = i;
+                    flag = 1;
+                }
+            }
+            if (flag == 0){
+                idxAtual = -1;
+            }
+
+ */
+
     }
+
+
+
 
     /**
      * Determine the shortest path between two vertices using Dijkstra's algorithm

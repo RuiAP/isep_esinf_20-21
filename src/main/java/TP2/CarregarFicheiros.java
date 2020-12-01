@@ -1,5 +1,7 @@
 package TP2;
 
+import TP2.model.Country;
+import TP2.model.User;
 import com.bahadirarslan.jeodezi.Coordinate;
 import com.bahadirarslan.jeodezi.GreatCircle;
 import graph.AdjacencyMatrixGraph;
@@ -9,7 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static TP2.Constants.*;
+import static TP2.model.Constantes.*;
 
 public class CarregarFicheiros {                            //refactor par eliminar partes dos metodos repetidos?
 

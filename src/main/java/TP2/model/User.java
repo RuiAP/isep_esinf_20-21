@@ -1,4 +1,4 @@
-package TP2;
+package TP2.model;
 
 import java.util.Objects;
 
@@ -40,7 +40,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "TP2.User{" +
+        return "TP2.model.User{" +
                 "user_name='" + userId + '\'' +
                 ", age=" + age +
                 ", city='" + city + '\'' +

@@ -1,5 +1,7 @@
 
 import TP2.*;
+import TP2.model.Country;
+import TP2.model.User;
 import graph.AdjacencyMatrixGraph;
 import graphbase.Graph;
 import org.junit.Test;

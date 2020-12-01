@@ -22,6 +22,8 @@ public class CarregarFicheiros {                            //refactor par elimi
     private String countriesFilePath;
     private String bordersFilePath;
 
+    private final double USER_EDGE_WEIGHT = 1.0;
+
 
     /**
      * Construtor
@@ -176,7 +178,7 @@ public class CarregarFicheiros {                            //refactor par elimi
                 }
                 //se encontrar os dois utilizadores no grafo adiciona a relação entre eles
                 if(vOrig != null && vDest != null){
-                    usersGraph.insertEdge(vOrig, vDest,  1.0);
+                    usersGraph.insertEdge(vOrig, vDest,  USER_EDGE_WEIGHT);
                 }
             }
 

@@ -138,7 +138,6 @@ public class GraphAlgorithmsTest {
     * Test of shortestPath method, of class GraphAlgorithms.
     */
     @Test
-    @Ignore
     public void testShortestPath() {
         System.out.println("Test of shortest path");
 		
@@ -155,7 +154,6 @@ public class GraphAlgorithmsTest {
 		
 	lenpath=GraphAlgorithms.shortestPath(incompleteMap,"Porto","Lisboa",shortPath);
         assertTrue("Path between Porto and Lisboa should be 335 Km", lenpath == 335);
-		
         Iterator<String> it = shortPath.iterator();
 
         assertTrue("First in path should be Porto", it.next().compareTo("Porto")==0);
@@ -232,8 +230,8 @@ public class GraphAlgorithmsTest {
         assertEquals("Path between Porto and Castelo Branco should now be 365 Km", 365, dists.get(completeMap.getKey("Castelo Branco")),0.01);
         assertEquals("Path to Castelo Branco", Arrays.asList("Porto","Aveiro","Leiria","Castelo Branco"), paths.get(completeMap.getKey("Castelo Branco")));
 
-        
-        
+
+
         GraphAlgorithms.shortestPaths(incompleteMap,"Porto",paths,dists);
 	    assertEquals("Length path should be Double.MAX_VALUE if there is no path", Double.MAX_VALUE, dists.get(completeMap.getKey("Faro")),0.01);
         assertEquals("Path between Porto and Lisboa should be 335 Km", 335, dists.get(completeMap.getKey("Lisboa")),0.01);

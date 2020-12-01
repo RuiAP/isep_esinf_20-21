@@ -1,7 +1,9 @@
 
 package graph;
 
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -19,54 +21,42 @@ public class EdgeAsDoubleGraphAlgorithms {
      * @param minDist minimum distances in the path
      *
      */
-    private static <V> void shortestPath(AdjacencyMatrixGraph<V,Double> graph, int sourceIdx, boolean[] knownVertices, int[] verticesIndex, double [] minDist){
+    private static <V> void shortestPath(AdjacencyMatrixGraph<V,Double> graph, int sourceIdx, boolean[] knownVertices, int[] verticesIndex, double [] minDist) {
 
-        int idxAtual = sourceIdx;
         minDist[sourceIdx] = 0;
-        LinkedList<Integer> auxQueue = new LinkedList<>();
+        verticesIndex[sourceIdx] = sourceIdx;
 
-        auxQueue.add(idxAtual);
-        while(!auxQueue.isEmpty()){
-            knownVertices[idxAtual] = true;
-            auxQueue.poll();
+        PriorityQueue<Integer> queue = new PriorityQueue<Integer>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                if (minDist[o1] < minDist[o2])
+                    return -1;
+                if (minDist[o1] > minDist[o2])
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+        int idxAtual = sourceIdx;
+        queue.add(idxAtual);
+
+        while (!queue.isEmpty()) {
+
+            idxAtual = queue.poll();
 
             V vAtual = graph.vertices.get(idxAtual);
-            //for(int i = 0; i<graph.numVertices();i++ ){
-                for( V v :graph.directConnections(graph.vertices.get(idxAtual))){
-                    int adjIdx = graph.toIndex(v);
-                    if(!knownVertices[adjIdx] && minDist[adjIdx] > minDist[idxAtual] + graph.getEdge(vAtual, v)){
-                        verticesIndex[adjIdx] = idxAtual;
-                        minDist[adjIdx] = minDist[idxAtual] + graph.getEdge(vAtual, v);
-                        auxQueue.add(adjIdx);
-                    }
-            //}
 
-                    if (!auxQueue.isEmpty()){
-                        idxAtual = auxQueue.peekFirst();
-
-                    }
-
-
-
+            for (V v : graph.directConnections(vAtual)) {
+                int adjIdx = graph.toIndex(v);
+                if (!knownVertices[adjIdx] && minDist[adjIdx] > minDist[idxAtual] + graph.getEdge(vAtual, v)) {
+                    verticesIndex[adjIdx] = idxAtual;
+                    minDist[adjIdx] = minDist[idxAtual] + graph.getEdge(vAtual, v);
+                    queue.add(adjIdx);
                 }
             }
+            knownVertices[idxAtual] = true;
 
-
-/*
-
-            int flag = 0;
-            for(int i = 0; i<knownVertices.length; i++){
-                if(!knownVertices[i]){
-                    idxAtual = i;
-                    flag = 1;
-                }
-            }
-            if (flag == 0){
-                idxAtual = -1;
-            }
-
- */
-
+        }
     }
 
 
@@ -126,7 +116,7 @@ public class EdgeAsDoubleGraphAlgorithms {
      * @param sourceIdx Source vertex 
      * @param destIdx Destination vertices
      * @param verticesIndex index of vertices in the minimum path
-     * @param Queue Vertices in the path (empty if no path)
+     * @param path Vertices in the path (empty if no path)
      */
     private static <V> void recreatePath(AdjacencyMatrixGraph<V, Double> graph, int sourceIdx, 
                                            int destIdx, int[] verticesIndex, LinkedList<V> path){
@@ -138,5 +128,29 @@ public class EdgeAsDoubleGraphAlgorithms {
         }
     }
 
+    /**
+     * Gera a matriz de distâncias minimas utilizando o método shortestPath para cada vértice
+     * @param g AdjacencyMatrixGraph<V, Double>
+     * @param <V>
+     */
+    public static <V> void matrixAllPaths(AdjacencyMatrixGraph<V, Double> g){
+
+        double[][] matrix = new double[g.numVertices][g.numVertices];
+        LinkedList<V> path = new LinkedList<>();
+
+        for(V vi : g.vertices()){
+            for(V vd : g.vertices){
+                matrix[g.vertices.indexOf(vi)][g.vertices.indexOf(vd)] = shortestPath(g,vi, vd, path);
+            }
+        }
+
+        for (int i = 0; i< g.numVertices; i++){
+            for (int j = 0; j<g.numVertices; j++){
+                System.out.printf("%.0f, ",matrix[i][j]);
+            }
+            System.out.println();
+        }
+
+    }
 
 }

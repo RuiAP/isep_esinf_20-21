@@ -25,7 +25,7 @@ public class Menu {
         int opcao = 0;
         do {
             String header = "Menu Inicial: ";
-            opcao = UserInterface.displayAndReadOption(listaOpcoes, header);
+            opcao = UtilsUI.displayAndReadOption(listaOpcoes, header);
 
             switch (opcao) {
                 case 1:

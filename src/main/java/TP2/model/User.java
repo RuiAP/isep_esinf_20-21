@@ -40,7 +40,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "TP2.model.User{" +
+        return "User{" +
                 "user_name='" + userId + '\'' +
                 ", age=" + age +
                 ", city='" + city + '\'' +

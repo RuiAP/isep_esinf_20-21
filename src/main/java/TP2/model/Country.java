@@ -87,7 +87,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "TP2.model.Country{" +
+        return "Country{" +
                 "countryName='" + countryName + '\'' +
                 ", continent='" + continent + '\'' +
                 ", population=" + population +

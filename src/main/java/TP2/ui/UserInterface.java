@@ -1,13 +1,12 @@
 package TP2.ui;
 
-import TP2.Controller;
+import TP2.controller.Controller;
 import TP2.model.Country;
 import TP2.model.User;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.TreeSet;
 
 public class UserInterface {
 

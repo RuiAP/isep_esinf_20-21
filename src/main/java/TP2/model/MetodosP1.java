@@ -1,4 +1,4 @@
-package TP2;
+package TP2.model;
 
 import TP2.model.Country;
 import TP2.model.User;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import static TP2.model.Constantes.*;
 
-public class CarregarFicheiros {                            //refactor par eliminar partes dos metodos repetidos?
+public class MetodosP1 {                            //refactor par eliminar partes dos metodos repetidos?
 
     private Graph<Country, String> countriesGraph;
     private AdjacencyMatrixGraph<User, Double> usersGraph;
@@ -31,7 +31,7 @@ public class CarregarFicheiros {                            //refactor par elimi
      * @param ficheirosPequenos True para carregar ficheiro pequenos.
      *                          False para carregar os ficheiros grandes
      */
-   public CarregarFicheiros(boolean ficheirosPequenos){
+   public MetodosP1(boolean ficheirosPequenos){
 
        countriesGraph = new Graph<Country, String>(false);
 

@@ -1,6 +1,7 @@
 package TP2;
 
 import TP2.model.Country;
+import TP2.model.MetodosP1;
 import TP2.model.User;
 import graph.AdjacencyMatrixGraph;
 import graphbase.Graph;
@@ -12,9 +13,9 @@ import static org.junit.Assert.*;
 
 
 @DisplayName("CarregarFicheirosTeste")
-public class CarregarFicheirosTest {
+public class MetodosP1Test {
 
-    CarregarFicheiros carregarFicheiro = new CarregarFicheiros(true);
+    MetodosP1 carregarFicheiro = new MetodosP1(true);
 
     Graph<Country, String> countriesGraph = carregarFicheiro.carregarGrafoCountries();
     AdjacencyMatrixGraph<User,Double> usersGraph = carregarFicheiro.carregarGrafoUsers();

@@ -14,7 +14,6 @@ public class Controller {
     private AdjacencyMatrixGraph<User, Double> usersGraph;
 
     public Controller(){
-        //permite ao user ir direto para os outros pontos sem passar pelo 1
         cf = new MetodosP1(true);
         countriesGraph = cf.carregarGrafoCountries();
         usersGraph = cf.carregarGrafoUsers();
@@ -174,7 +173,7 @@ public class Controller {
         caminho.clear();
         Object[] results = new Object[2];
         results[0] = caminho;
-        results[1] = -1;
+        results[1] = -1.0;
 
         //se algum dos users não pertencer ao grafo devolve distancia = -1
         if(user1 == null || user2 == null || user1.equals(user2)){
@@ -194,37 +193,25 @@ public class Controller {
         if(countryUser1 == null || countryUser2 == null){
             return results;
         }
-
-
-        //junta numa só lista as cidades intermédias para o user1 e user2
-        LinkedHashSet<Country> cidadesAIncluir = new LinkedHashSet<>();
-        cidadesAIncluir.addAll(MetodosP6.paisesComMaisAmigosPorUser(usersGraph, countriesGraph, user1,numCidades));     //valores sao muito repetidos. verificar teste unitario!
-        cidadesAIncluir.addAll(MetodosP6.paisesComMaisAmigosPorUser(usersGraph, countriesGraph, user2,numCidades));
-
-
-
-        //gera todas as permutações possiveis com as cidades a incluir
-        LinkedList<Country> cidadesEmLista = new LinkedList<>(cidadesAIncluir);
-        List<List<Country>> permutacoes =
-                (List<List<Country>>) MetodosP6.calcularPermutacoesPossiveis(cidadesEmLista);
-
-
-        //ver as permutações POSSIVEIS(têm que estar por ordem) desta lista e escolher a mais curta
-        LinkedHashSet<LinkedList<Country>> allPossiblePaths = new LinkedHashSet<>();
-        LinkedList<Country> path;
-
-        //constroi todos os caminhos possiveis (Pais inicio + permutações + pais fim)
-        for(List<Country> lc : permutacoes){
-            path = new LinkedList<>();
-            path.add(countryUser1);
-            for(Country c : lc){
-                if (c != countryUser1 && c!=countryUser2)
-                    path.add(c);
-            }
-            path.addLast(countryUser2);
-            allPossiblePaths.add(path);
+        if(!countryUser1.getContinent().equalsIgnoreCase(countryUser2.getContinent())){
+            System.out.printf("Não é possivel calcular um caminho terrestre entre %s e %s.",
+                    countryUser1.getContinent(),
+                    countryUser2.getContinent());
+            return results;
         }
 
+        if(user1.getCity().equalsIgnoreCase("reiquiavique")
+            || user2.getCity().equalsIgnoreCase("reiquiavique")
+            || user1.getCity().equalsIgnoreCase("valletta")
+            || user2.getCity().equalsIgnoreCase("valletta")
+            || user1.getCity().equalsIgnoreCase("nicosia")
+            || user2.getCity().equalsIgnoreCase("nicosia")
+            || user1.getCity().equalsIgnoreCase("dublin")
+            || user2.getCity().equalsIgnoreCase("dublin")
+        ){
+            System.out.printf("Não é possivel calcular um caminho terrestre para cidades isoladas.");
+            return results;
+        }
 
         //cria um grafo de matriz de adjacencias para os paises (a partir do grafo de mapa de adjacencias)
         AdjacencyMatrixGraph<Country, Double> countriesMatrixGraph = new AdjacencyMatrixGraph<>();
@@ -238,29 +225,60 @@ public class Controller {
         //matriz de custos minimos
         countriesMatrixGraph = GraphAlgorithmsAdjMatrix.transitiveClosureWithEdgeWeights(countriesMatrixGraph);
 
-        //caminho mais curto
+        //verificar, através do fecho transitivo, se os dois paises estão conectados
+          for(Country c1 : countriesMatrixGraph.vertices()){
+              for (Country c2: countriesMatrixGraph.vertices()){
+                  if(c1 != c2 && countriesMatrixGraph.getEdge(c1,c2) ==null){
+                      System.out.println("Os países dos dois utilizadores não estão conectados.");
+                      return results;
+                  }
+              }
+          }
+
+
+
+        //junta numa só lista as cidades intermédias para o user1 e user2
+        LinkedHashSet<Country> cidadesAIncluir = new LinkedHashSet<>();
+        cidadesAIncluir.addAll(MetodosP6.paisesComMaisAmigosPorUser(usersGraph, countriesGraph, user1,numCidades));
+        cidadesAIncluir.addAll(MetodosP6.paisesComMaisAmigosPorUser(usersGraph, countriesGraph, user2,numCidades));
+
+
+
+        //gera todas as permutações possiveis com as cidades a incluir
+        LinkedList<Country> cidadesEmLista = new LinkedList<>(cidadesAIncluir);
+        List<List<Country>> permutacoes =
+                (List<List<Country>>) MetodosP6.calcularPermutacoesPossiveis(cidadesEmLista);
+
+
+
+        //constroi todos os caminhos possiveis (Pais inicio + permutações + pais fim)
+        LinkedHashSet<LinkedList<Country>> allPossiblePaths = new LinkedHashSet<>();
+        LinkedList<Country> path;
+
+        for(List<Country> lc : permutacoes){
+            path = new LinkedList<>();
+            path.add(countryUser1);
+            for(Country c : lc){
+                if (c != countryUser1 && c!=countryUser2)
+                    path.add(c);
+            }
+            path.addLast(countryUser2);
+            allPossiblePaths.add(path);
+        }
+
+
+
+        //de entre todos os caminhos(permutações) possiveis seleciona o mais curto
         caminho = MetodosP6.selecionaCaminhomaisCurto(countriesMatrixGraph, allPossiblePaths);
-        //distancia do caminho mais curto
+
+        //calcula distancia do caminho mais curto
         Double distance = MetodosP6.calcularDistanciaCaminho(countriesMatrixGraph, caminho);
 
 
         results[0] = caminho;
         results[1] = distance;
         return results;
-
-
-
-        //----------------------------------------------------------------------------------------------------------
-        //falta:
-        //validar se as cidades estão no mesmo continente
-        //depois, como valido a questão do terrestre? Têm que fazer fronteira?
     }
-
-
-
-
-
-
 
 
 

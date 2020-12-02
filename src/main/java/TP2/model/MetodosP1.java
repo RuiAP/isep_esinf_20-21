@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import static TP2.model.Constantes.*;
 
-public class MetodosP1 {                            //refactor par eliminar partes dos metodos repetidos?
+public class MetodosP1 {
 
     private Graph<Country, String> countriesGraph;
     private AdjacencyMatrixGraph<User, Double> usersGraph;

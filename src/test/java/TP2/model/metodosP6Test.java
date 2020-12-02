@@ -1,10 +1,7 @@
 package TP2.model;
 
 import graph.AdjacencyMatrixGraph;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -207,7 +204,6 @@ class metodosP6Test {
     }
 
     @Test
-    @Ignore
     void testPaisesComMaisAmigosPorUser() {
 
 

@@ -140,12 +140,17 @@ public class UserInterface {
                     return false;
                 }
 
-
+                StringBuilder sb = new StringBuilder();
                 System.out.println("O caminho mais curto é:");
-                for(Country c : caminho){
-                    System.out.printf("%s, ", c.getCapital());
+                for (int i = 0; i<caminho.size(); i++){
+                    if(i==0){
+                        System.out.print(caminho.get(i).getCapital());
+                    }
+                    else{
+                        System.out.print(", "+ caminho.get(i).getCapital());
+                    }
                 }
-                System.out.println("\n");
+                System.out.println(".\n");
                 System.out.printf("Distância aproximada: %.0f Km.",distTotal);
                 return true;
             }

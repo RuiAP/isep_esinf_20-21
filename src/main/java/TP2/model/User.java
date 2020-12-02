@@ -40,12 +40,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "user_name='" + userId + '\'' +
-                ", age=" + age +
-                ", city='" + city + '\'' +
-                '}';
+        return userId +". Tem "
+                + age + " anos. Vive em "
+                + city + ".";
     }
+
 
     @Override
     public boolean equals(Object o) {

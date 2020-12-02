@@ -3,10 +3,11 @@ package TP2;
 import TP2.model.Country;
 import TP2.model.User;
 import graph.AdjacencyMatrixGraph;
+import graph.GraphAlgorithmsAdjMatrix;
 import graphbase.Graph;
+import graphbase.GraphAlgorithms;
 
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Controller {
     private CarregarFicheiros cf;
@@ -36,13 +37,96 @@ public class Controller {
     }
 
 
-    public LinkedList<User> p2CalcularAmigosComuns(int nUtilizadoresPopulares) {
+    public LinkedHashSet<User> p2CalcularAmigosComuns(ArrayList<User> utilizadoresPopulares) {
 
+        LinkedHashSet<User> amigosComuns = new LinkedHashSet<>();
+        ArrayList<User> listTemp1, listTemp2;
 
+        for (User popUser : utilizadoresPopulares){
+            for(User popUser2 : utilizadoresPopulares){
+                if(popUser != popUser2){
+                    listTemp1 = (ArrayList<User>)usersGraph.directConnections(popUser);
+                    listTemp2 = (ArrayList<User>)usersGraph.directConnections(popUser2);
+                    for (User u3 : listTemp1){
+                        if(listTemp2.contains(u3)){
+                            amigosComuns.add(u3);
+                        }
+                    }
+                }
+            }
+        }
 
-
-        throw new UnsupportedOperationException();
+        return amigosComuns;
     }
+
+    /**
+     * Seleciona e devolve os n vertices(utilizadores) com mais vertides adjacentes.
+     * @param nUtilizadoresPopulares quantidade de utilizadores a selecionar
+     * @return Lista contendo os n utilizadores mais populares
+     *         Lista pode ter size()< n se existirem menos de n vertices.
+     */
+    public ArrayList<User> calcularUtilizadoresPopulares(int nUtilizadoresPopulares){
+        ArrayList<User> usersList = (ArrayList<User>)usersGraph.vertices();
+        ArrayList<User> result = new ArrayList<>();
+
+        //melhor ou pior que um BFS por vertice?
+        usersList.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return usersGraph.outDegree(o2) - usersGraph.outDegree(o1); //suficiente porque grafo é não direcionado
+            }
+        });
+
+        for (int i = nUtilizadoresPopulares -1; i>=0; i--){
+            if(usersList.get(i) != null)
+            result.add(usersList.get(i));
+        }
+        return result;
+    }
+
+    /**
+     * Verifica se o grafo é conexo e devolve o diametro do grafo
+     * Calculado a partir do máximo da matriz de custos minimos (Floyd-Warshall)
+     * @return double com o a distância mínima para atravessar o grafo
+     *          se -1: o  grafo não é conexo
+     */
+    public double p3CalcularDiametroGrafo() {
+        //ArrayList<User> usersList = (ArrayList<User>)usersGraph.vertices();
+
+        //seleciona o primeiro vertice do grafo
+        Iterator<User> it = usersGraph.vertices().iterator();
+        User vOrig;
+        if(it.hasNext()){
+            vOrig = it.next();
+        }else{
+            return -1;
+        }
+
+        //verifica se o grafo é conexo
+        LinkedList<User> resultBFS = GraphAlgorithmsAdjMatrix.BFS(usersGraph,vOrig);
+        if(resultBFS == null || resultBFS.size() != usersGraph.numVertices()){
+            return -1;
+        }
+
+        //matriz de custo/distância dos caminhos mínimos
+        AdjacencyMatrixGraph<User, Double>graphTransitiveClosure =
+                GraphAlgorithmsAdjMatrix.transitiveClosureWithEdgeWeights(usersGraph);
+
+        double max = 0;
+        Double edgeViVj;
+        //encontra o máximo de todos os caminhos mínimos
+        for (User vi : graphTransitiveClosure.vertices()) {
+            for (User vj : graphTransitiveClosure.vertices()) {
+                edgeViVj = graphTransitiveClosure.getEdge(vi, vj);
+                if (edgeViVj != null && edgeViVj > max) {
+                    max = edgeViVj;
+                }
+            }
+        }
+        return max;
+    }
+
+
 
     public LinkedList<User> p4CalcularAmigosProximos(User userSelecionado, int nFronteiras){
         Country userCountry = checkVertexByCapitalName(userSelecionado.getCity());

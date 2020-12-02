@@ -4,7 +4,9 @@ import TP2.Controller;
 import TP2.model.User;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.TreeSet;
 
 public class UserInterface {
 
@@ -40,9 +42,12 @@ public class UserInterface {
     public void ponto2() {
         String header = "Introduza o valor de n:";
         int nUtilizadoresPopulares = UtilsUI.readIntFromConsole(header);
-        LinkedList<User> amigosComuns = c1.p2CalcularAmigosComuns(nUtilizadoresPopulares);
+        ArrayList<User> listautilizadoresPopulares = c1.calcularUtilizadoresPopulares(nUtilizadoresPopulares);
+        LinkedHashSet<User> amigosComuns = c1.p2CalcularAmigosComuns(listautilizadoresPopulares);
+
         System.out.printf("Os %d utilizadores mais populares são:\n",nUtilizadoresPopulares);
-        System.out.printf("Os amigos comuns entre os %d utilizadores mais populares são:\n", nUtilizadoresPopulares);
+        listautilizadoresPopulares.forEach(System.out::println);
+        System.out.println("\nEstes utilizadores têm os seguintes amigos em comum:");
         amigosComuns.forEach(System.out::println);
     }
 
@@ -50,6 +55,12 @@ public class UserInterface {
      * Solicita e processa o input do utilizador, necessário para realizar o Ponto3
      */
     public void ponto3() {
+        double caminhoMax = c1.p3CalcularDiametroGrafo();
+        if (caminhoMax == -1) {
+            System.out.println("A rede não é conectada.");
+            return;
+        }
+        System.out.printf("A rede é conectada e são necessárias, no mínimo, %.0f ligações.\n", caminhoMax);
 
     }
 
@@ -96,6 +107,9 @@ public class UserInterface {
      * Solicita e processa o input do utilizador, necessário para realizar o Ponto6
      */
     public void ponto6() {
+        //pedir dois utilizadores
+        //pedir quantidade n de cidades intermedias (para cada utilizador)
+
     }
 
 

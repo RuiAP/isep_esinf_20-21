@@ -194,6 +194,11 @@ public class GraphAlgorithmsAdjMatrixTest {
 		System.out.println(completeMap);
 
 		 */
+	}
+
+	@Test
+	public void testTransitiveClosureWithWeights() {
+
 
 	}
 

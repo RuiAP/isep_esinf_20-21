@@ -46,7 +46,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     /**
     * Returns the index associated with a vertex
     * 
-    * @param V vertex
+    * @param vertex
     * @return vertex index, -1 if vertex does not exist in the graph
     */
 
@@ -104,7 +104,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
     /**
     * Checks if a vertex exist
-    * @param V vertex
+    * @param vertex
     * @return true if exists
     */
     public boolean checkVertex(V vertex) {
@@ -142,7 +142,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     /**
      * Returns the number of edges leaving vertex, -1 if vertex doesn't exist 
      * This is the same result returned by inDegree
-     * @param V vertex
+     * @param  vertex
      * @return number of edges leaving vertex v, 
      */
     public int outDegree(V vertex) {
@@ -349,11 +349,11 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
     /**
      * Removes the edge between two vertices
-     * Package level method is for use of algorithms class
-     * 
-     * @param the two vertices
+     *  Package level method is for use of algorithms class
+     * @param indexA index of vertice A
+     * @param indexB index of vertice B
      * @return the edge or null if vertices are not in the graph or not
-     *         connected
+     *          connected
      */
     E removeEdge(int indexA, int indexB) {
         E edge = edgeMatrix[indexA][indexB];
@@ -425,7 +425,6 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
     /**
      * Alternative representation of the graph. Includes edge weight.
-     * Matrix only represents existence of Edge
      */
     public String toString2() {
         StringBuilder sb = new StringBuilder();
@@ -503,7 +502,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
     /**
      * Implementation of equals
-     * @param the other graph to test for equality
+     * @param oth other graph to test for equality
      * @return true if both objects represent the same graph
      */
 

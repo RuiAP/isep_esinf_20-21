@@ -459,35 +459,9 @@ public class Controller {
     }
 
 
-    /**
-     * Valida se o vértice existe no grafo atualmente carregado
-     * @param user vertice a verificar
-     * @return true se existir no grafo
-     *          false se não existir no grafo
-     */
-    public boolean checkVertexExists (User user){
-        return usersGraph.checkVertex(user);
-    }
-
-    /**
-     * Valida se o vértice existe no grafo atualmente carregado
-     * @param country vertice a verificar
-     * @return true se existir no grafo
-     *         false se não existir no grafo
-     */
-    public boolean checkVertexExists (Country country){
-        return countriesGraph.validVertex(country);
-    }
+ 
 
 
-    //only to be used by unit tests
-    private void setCountriesGraph(Graph<Country, String> countriesGraph) {
-        this.countriesGraph = countriesGraph;
-    }
-
-    private void setUsersGraph(AdjacencyMatrixGraph<User, Double> usersGraph) {
-        this.usersGraph = usersGraph;
-    }
 
 
 }

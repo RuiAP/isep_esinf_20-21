@@ -1,14 +1,15 @@
 package TP2;
 
+import TP2.model.Country;
 import TP2.model.User;
 import graph.AdjacencyMatrixGraph;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,112 +26,33 @@ class ControllerTest {
 
 
     @Test
-    void p1CriarGrafosTest() {
+    @Ignore
+    void testP1CriarGrafos() {
     }
 
     @Test
-    void p2CalcularAmigosComunsTest() {
+    @Ignore
+    void testP2CalcularAmigosComuns() {
     }
 
     @Test
-    void p3CalcularDiametroGrafoTest() {
+    void testP3CalcularDiametroGrafo() {
     }
 
     @Test
-    void p4CalcularAmigosProximosTest() {
-
-    }
-    @Test
-    void p6CaminhoTerrestreTest() {
+    @Ignore
+    void testP4CalcularAmigosProximos() {
     }
 
     @Test
-    void breadthFirstSearchTest() {
-    }
-
-    @Test
-    void checkVertexByUserIdTest() {
-    }
-
-    @Test
-    void checkVertexByCapitalNameTest() {
-    }
-
-    @Test
-    void checkVertexExistsTest() {
-    }
-
-    @Test
-    void testCheckVertexExistsTest() {
+    @Ignore
+    void testP6CaminhoTerrestre() {
     }
 
 
     @Test
-    void testP1CriarGrafosTest() {
-    }
-
-    @Test
-    void testP2CalcularAmigosComunsTest() {
-    }
-
-    @Test
-    void calcularUtilizadoresPopularesTest() {
-        System.out.println("calcularUtilizadoresPopularesTest");
-        //utiliza o grafo de users gerado, a partir de ficheiro susers.txt, no construtor do controller
-        /*
-        0,1,1,1,1,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,    9       u1
-        1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,    6       u2
-        1,1,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,    9       u3
-        1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    4       u4
-        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u5
-        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u6
-        1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    3       u7
-        1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,    4       u9
-        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    1       u10
-        1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    4       u14
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u15
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u16
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u19
-        1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u20
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u21
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u23
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,    4       u24
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,    3       u25
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,    3       u26
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,    1       u27
-        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,    3       u28
-        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,    2       u29
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,    3       u30
-        0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    3       u31
-        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,    5       u32
-        0,0,1,0,0,0,0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,1,1,1,0,    11      u33
-         */
-
-        ArrayList<User> result = new ArrayList<>();
-        ArrayList<User> expectedResult = new ArrayList<>();
-
-        //user com mais amizades é o u33
-        User u33 = new User ("u33", 48, "brasilia");
-        expectedResult.add(u33);
-        result.add( controller.calcularUtilizadoresPopulares(1).get(0) );
-        assertEquals(expectedResult,result);
-
-        //users u33, u1 e u3 são os tres com mais amizades
-        expectedResult.add(new User ("u1", 27, "brasilia"));
-        expectedResult.add(new User ("u3", 20, "quito"));
-    }
-
-
-
-    @Test
-    void testP4CalcularAmigosProximosTest() {
-    }
-
-
-
-    @Test
-    void selecionaCaminhomaisCurtoTest() {
-        System.out.println("selecionaCaminhomaisCurtoTest");
+    void testSelecionaCaminhomaisCurto() {
+        System.out.println("testSelecionaCaminhomaisCurto");
 
         AdjacencyMatrixGraph<String, Double> instance = new AdjacencyMatrixGraph<String,Double>();
 
@@ -193,8 +115,8 @@ class ControllerTest {
     }
 
     @Test
-    void calcularDistanciaCaminhoTest() {
-        System.out.println("calcularDistanciaCaminhoTest");
+    void testCalcularDistanciaCaminho() {
+        System.out.println("testCalcularDistanciaCaminho");
 
         AdjacencyMatrixGraph<String, Double> instance = new AdjacencyMatrixGraph<String,Double>();
 
@@ -223,7 +145,7 @@ class ControllerTest {
     }
 
     @Test
-    void calcularPermutacoesPossiveisTest() {
+    void testCalcularPermutacoesPossiveis() {
         System.out.println("calcularPermutacoesPossiveisTest");
         LinkedList<String> original = new LinkedList<>();
         List<List<String>> expectedResult = new LinkedList<>();
@@ -279,28 +201,100 @@ class ControllerTest {
     }
 
     @Test
-    void paisesComMaisAmigosPorUserTest() {
+    @Ignore
+    void testPaisesComMaisAmigosPorUser() {
     }
+
 
     @Test
-    void filtrarUsersPorCidadeTest() {
+    void testCalcularUtilizadoresPopulares() {
+        System.out.println("testCalcularUtilizadoresPopulares");
+        //utiliza o grafo de users gerado, a partir de ficheiro susers.txt, no construtor do controller
+        /*
+        0,1,1,1,1,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,    9       u1
+        1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,    6       u2
+        1,1,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,    9       u3
+        1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    4       u4
+        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u5
+        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u6
+        1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    3       u7
+        1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,    4       u9
+        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    1       u10
+        1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    4       u14
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u15
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u16
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u19
+        1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,    2       u20
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u21
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    1       u23
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,    4       u24
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,    3       u25
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,    3       u26
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,    1       u27
+        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,    3       u28
+        0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,    2       u29
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,    3       u30
+        0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,    3       u31
+        1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,    5       u32
+        0,0,1,0,0,0,0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,1,1,1,0,    11      u33
+         */
+
+        ArrayList<User> result = new ArrayList<>();
+        ArrayList<User> expectedResult = new ArrayList<>();
+
+        //user com mais amizades é o u33
+        User u33 = new User ("u33", 48, "brasilia");
+        expectedResult.add(u33);
+        result.add( controller.calcularUtilizadoresPopulares(1).get(0) );
+        assertEquals(expectedResult,result);
+
+        //users u33, u1 e u3 são os tres com mais amizades
+        expectedResult.add(new User ("u1", 27, "brasilia"));
+        expectedResult.add(new User ("u3", 20, "quito"));
+    }
+
+    
+    @Test
+    @Ignore
+    void testFiltrarUsersPorCidade() {
     }
 
 
+    @Test
+    void breadthFirstSearchTest() {
+
+        ---------------------------------
+    }
 
     @Test
     void testCheckVertexByUserId() {
+        System.out.println("testCheckVertexByUserId");
+
+        User user1 = new User ("u1", 27, "brasilia");
+        assertEquals(user1, controller.checkVertexByUserId("u1"));
+
+        User user33 = new User ("u33", 48, "brasilia");
+        assertEquals(user33, controller.checkVertexByUserId("u33"));
+
+        //userId "specialUser200" não corresponde a nenhum user
+        assertNull(controller.checkVertexByUserId("specialUser200"));
     }
 
     @Test
     void testCheckVertexByCapitalName() {
+        System.out.println("testCheckVertexByCapitalName");
+
+        Country c1 = new Country("argentina","americasul",
+                41.67,"buenosaires",-34.6131500,-58.3772300);
+        assertEquals(c1, controller.checkVertexByCapitalName("buenosaires"));
+
+        Country c13 = new Country("uruguai", "americasul",
+                3.35, "montevideu", -34.9032800, -56.1881600);
+        assertEquals(c13, controller.checkVertexByCapitalName("montevideu"));
+
+
+        assertNull(controller.checkVertexByCapitalName("Porto"));
+
     }
 
-    @Test
-    void testCheckVertexExists1() {
-    }
-
-    @Test
-    void testCheckVertexExists2() {
-    }
 }

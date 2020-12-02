@@ -1,6 +1,7 @@
 package TP2.ui;
 
 import TP2.Controller;
+import TP2.model.Country;
 import TP2.model.User;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class UserInterface {
             System.out.println("Utilizador não encontrado.");
         }
         else{
-            System.out.println("User selecionado:\n " + userSelecionado+".\n");
+            System.out.println("User selecionado:\n " + userSelecionado+"\n");
 
             String strPrompt2 = "Introduza o número de fronteiras que quer incluir na pesquisa:";
             int nFronteiras = UtilsUI.readIntFromConsole(strPrompt2);
@@ -106,9 +107,51 @@ public class UserInterface {
     /**
      * Solicita e processa o input do utilizador, necessário para realizar o Ponto6
      */
-    public void ponto6() {
-        //pedir dois utilizadores
-        //pedir quantidade n de cidades intermedias (para cada utilizador)
+    public boolean ponto6() {
+
+        String strPrompt = "Introduza o primeiro utilizador a selecionar(formato \"ux\" onde x é o numero do utilizador):";
+
+        String userId = UtilsUI.readLineFromConsole(strPrompt);
+        User userSelecionado1 = c1.checkVertexByUserId(userId);
+        if( userSelecionado1 == null){
+            System.out.println("Utilizador não encontrado no grafo.");
+            return false;
+        }
+        else{
+            System.out.println("Primeiro utilizador selecionado.");
+            String strPrompt2 = "Introduza o segundo utilizador a selecionar(formato \"ux\" onde x é o numero do utilizador):";
+
+            String user2Id = UtilsUI.readLineFromConsole(strPrompt2);
+            User userSelecionado2 = c1.checkVertexByUserId(user2Id);
+            if( userSelecionado2 == null) {
+                System.out.println("Utilizador não encontrado no grafo.");
+                return false;
+            }else{
+                System.out.println("Segundo utilizador selecionado");
+                String strPromptCidades = "Quantas cidades intermédias, por utilizador, deseja incluir?";
+                int numCidades = UtilsUI.readIntFromConsole(strPromptCidades);
+
+                LinkedList<Country> caminho = new LinkedList<>();
+                Object[] resultados = c1.p6CaminhoTerrestre(userSelecionado1, userSelecionado2, numCidades, caminho);
+                caminho = (LinkedList<Country>) resultados[0];
+                double distTotal = (Double) resultados[1];
+
+                if ((int)distTotal == -1){
+                    System.out.println("Impossivel gerar caminho entre os dois utilizadores.");
+                    return false;
+                }
+
+
+                System.out.println("O caminho mais curto é:");
+                for(Country c : caminho){
+                    System.out.printf("%s, ", c.getCapital());
+                }
+                System.out.println("\n");
+                System.out.printf("Distância aproximada: %.0f Km.",distTotal);
+                return true;
+            }
+        }
+
 
     }
 

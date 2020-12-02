@@ -1,11 +1,7 @@
 package graphbase;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -57,9 +53,15 @@ public class Graph<V,E> implements GraphInterface<V,E> {
     public int numEdges(){ return numEdge; }
     
     
-    public Iterable<Edge<V,E>> edges() { 
-        
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Iterable<Edge<V,E>> edges() {
+        LinkedHashSet<Edge<V,E>> allEdges = new LinkedHashSet<>();
+
+        for(Vertex<V,E> v: vertices.values()){
+            for(Edge<V,E> e: v.getAllOutEdges()){
+                allEdges.add(e);
+            }
+        }
+        return allEdges;
     }
     
     public Edge<V,E> getEdge(V vOrig, V vDest){
@@ -132,8 +134,17 @@ public class Graph<V,E> implements GraphInterface<V,E> {
     }
     
     public Iterable<Edge<V,E>> incomingEdges(V vert){
- 
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        if (!validVertex(vert))
+            return null;
+        if(!this.isDirected){
+            return outgoingEdges(vert);
+        }
+        else{
+            //desenvolver consoante necessidade
+            return outgoingEdges(vert);
+        }
+
     }
             
     public boolean insertVertex(V vert){

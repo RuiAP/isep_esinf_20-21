@@ -24,8 +24,15 @@ class ControllerTest {
     }
 
     @Test
+    void p3CalcularDiametroGrafo() {
+    }
+
+    @Test
     void p4CalcularAmigosProximos() {
 
+    }
+    @Test
+    void p6CaminhoTerrestre() {
     }
 
     @Test
@@ -49,4 +56,61 @@ class ControllerTest {
     }
 
 
+    @Test
+    void testP1CriarGrafos() {
+    }
+
+    @Test
+    void testP2CalcularAmigosComuns() {
+    }
+
+    @Test
+    void calcularUtilizadoresPopulares() {
+    }
+
+
+
+    @Test
+    void testP4CalcularAmigosProximos() {
+    }
+
+
+
+    @Test
+    void selecionaCaminhomaisCurto() {
+    }
+
+    @Test
+    void calcularDistancia() {
+    }
+
+    @Test
+    void generatePerm() {
+    }
+
+    @Test
+    void paisesComMaisAmigosPorUser() {
+    }
+
+    @Test
+    void filtrarUsersPorCidade() {
+    }
+
+
+
+    @Test
+    void testCheckVertexByUserId() {
+    }
+
+    @Test
+    void testCheckVertexByCapitalName() {
+    }
+
+    @Test
+    void testCheckVertexExists1() {
+    }
+
+    @Test
+    void testCheckVertexExists2() {
+    }
 }

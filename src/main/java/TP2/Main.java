@@ -25,25 +25,6 @@ public class Main {
         menu.display();
 
 
-        CarregarFicheiros cf = new CarregarFicheiros(true);
-
-        //Graph<Country, String> grafoTesteCountries = cf.carregarGrafoCountries();
-        //System.out.println(grafoTesteCountries);
-
-        AdjacencyMatrixGraph<User, Double> grafoTesteUsers = cf.carregarGrafoUsers();
-        System.out.println("Carregado " +  LocalDateTime.now());
-
-        ArrayList<User> newlist = (ArrayList<User>)grafoTesteUsers.vertices();
-        System.out.println(newlist.get(328));
-        LinkedList<User> lista = GraphAlgorithmsAdjMatrix.BFS(grafoTesteUsers,newlist.get(650));
-        System.out.println(lista);
-        System.out.println("acabou BFS " + LocalDateTime.now());
-
-        grafoTesteUsers = GraphAlgorithmsAdjMatrix.transitiveClosure(grafoTesteUsers,1.0);
-        System.out.println("acabou t" + LocalDateTime.now());
-        //grafoTesteUsers = GraphAlgorithmsAdjMatrix.transitiveClosureMinDist(grafoTesteUsers);
-        //System.out.println(grafoTesteUsers.toString2());
-
 
         
 

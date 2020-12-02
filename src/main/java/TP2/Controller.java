@@ -154,7 +154,7 @@ public class Controller {
         results[0] = caminho;
         results[1] = -1;
 
-        //se algum dos users não pertencer ao grafo devolve -1
+        //se algum dos users não pertencer ao grafo devolve distancia = -1
         if(user1 == null || user2 == null || user1.equals(user2)){
             return results;
         }
@@ -168,7 +168,7 @@ public class Controller {
                 countryUser2 = c;
             }
         }
-        //se o grafo de paises não tiver o pais dos users introduzidos, o método devolve -1
+        //se o grafo de paises não tiver o pais dos users introduzidos, o método devolve distancia = -1
         if(countryUser1 == null || countryUser2 == null){
             return results;
         }
@@ -180,31 +180,27 @@ public class Controller {
         cidadesAIncluir.addAll(paisesComMaisAmigosPorUser(user2,numCidades));
 
 
-        //ver as permutações POSSIVEIS(têm que estar por ordem) desta lista e escolher a mais curta
 
+        //gera todas as permutações possiveis com as cidades a incluir
+        LinkedList<Country> cidadesEmLista = new LinkedList<>(cidadesAIncluir);
+        List<List<Country>> permutacoes = (List<List<Country>>) calcularPermutacoesPossiveis(cidadesEmLista);
+
+
+        //ver as permutações POSSIVEIS(têm que estar por ordem) desta lista e escolher a mais curta
         LinkedHashSet<LinkedList<Country>> allPossiblePaths = new LinkedHashSet<>();
         LinkedList<Country> path;
 
-        //ver a data structure mais adecuada (nomeadamente acesso O(1). basta arraylist??)  porque a linkedlist nao é a melhor
-
-        LinkedList<Country> cidadesAIncluirList = new LinkedList<>(cidadesAIncluir);
-
-        List<List<Country>> permutacoes = (List<List<Country>>) generatePerm(cidadesAIncluirList);
-
-
-            for(List<Country> lc : permutacoes){
-                path = new LinkedList<>();
-                path.add(countryUser1);
-                for(Country c : lc){
-                    if (c != countryUser1 && c!=countryUser2)
-                        path.add(c);
-                    }
-                path.addLast(countryUser2);
-                allPossiblePaths.add(path);
+        //constroi todos os caminhos possiveis (Pais inicio + permutações + pais fim)
+        for(List<Country> lc : permutacoes){
+            path = new LinkedList<>();
+            path.add(countryUser1);
+            for(Country c : lc){
+                if (c != countryUser1 && c!=countryUser2)
+                    path.add(c);
             }
-
-
-
+            path.addLast(countryUser2);
+            allPossiblePaths.add(path);
+        }
 
 
         //cria um grafo de matriz de adjacencias para os paises (a partir do grafo de mapa de adjacencias)
@@ -216,17 +212,17 @@ public class Controller {
             countriesMatrixGraph.insertEdge(edge.getVOrig(),edge.getVDest(),edge.getWeight());
         }
 
-        //devolve grafo com a matriz de custos minimos
+        //matriz de custos minimos
         countriesMatrixGraph = GraphAlgorithmsAdjMatrix.transitiveClosureWithEdgeWeights(countriesMatrixGraph);
 
-
-        caminho = selecionaCaminhomaisCurto(countriesMatrixGraph, allPossiblePaths, caminho);
-        Double distance = calcularDistancia(countriesMatrixGraph, caminho);
+        //caminho mais curto
+        caminho = selecionaCaminhomaisCurto(countriesMatrixGraph, allPossiblePaths);
+        //distancia do caminho mais curto
+        Double distance = calcularDistanciaCaminho(countriesMatrixGraph, caminho);
 
 
         results[0] = caminho;
         results[1] = distance;
-
         return results;
 
 
@@ -237,12 +233,32 @@ public class Controller {
         //depois, como valido a questão do terrestre? Têm que fazer fronteira?
     }
 
+    /**
+     * Seleciona o caminho mais curto a partir de uma lista de caminhos possiveis
+     * @param graph grafo ao qual pertencem os caminhos
+     * @param possiblePaths lista de possiveis caminhos
+     * @param <V> vertice
+     * @return Lista contendo o caminho mais curto (dos caminhos possiveis)
+     */
     public <V> LinkedList<V> selecionaCaminhomaisCurto(AdjacencyMatrixGraph<V,Double> graph,
-                                                LinkedHashSet<LinkedList<V>> possiblePaths,LinkedList<V> shortestPath ){
+                                                       LinkedHashSet<LinkedList<V>> possiblePaths){
+        if(possiblePaths == null || possiblePaths.isEmpty() || graph == null) {return null;}
+        V vOrig = null;
+        V vDest = null;
+        for(LinkedList<V> v : possiblePaths){
+            vOrig = v.peekFirst();
+            vDest = v.peekLast();
+            break;
+        }
+
+        LinkedList<V> shortestPath = new LinkedList<>();
         double minDist = Double.MAX_VALUE;
         double pathDist = 0;
         for(LinkedList<V> path : possiblePaths){
-            pathDist = calcularDistancia(graph, path);
+            if(path.peekFirst() != vOrig || path.peekLast() != vDest){
+                return null; //retorna null se existirem destinos ou origens diferentes
+            }
+            pathDist = calcularDistanciaCaminho(graph, path);
             if(pathDist < minDist){
                 minDist = pathDist;
                 shortestPath = path;
@@ -252,7 +268,14 @@ public class Controller {
         return shortestPath;
     }
 
-    public <V> double calcularDistancia(AdjacencyMatrixGraph<V,Double> graph, LinkedList<V> path){
+    /**
+     * Devolve a distancia percorrida ao percorrer o caminho passado por parametro
+     * @param graph grafo contendo a matriz com respetivos ramos pesados
+     * @param path caminho a percorrer
+     * @param <V> vertice
+     * @return double com o distancia/peso total do caminho
+     */
+    public <V> double calcularDistanciaCaminho(AdjacencyMatrixGraph<V,Double> graph, LinkedList<V> path){
 
         double totalSize = 0;
 
@@ -278,8 +301,7 @@ public class Controller {
      * @param <E>
      * @return
      */
-    public <E> List<List<E>> generatePerm(List<E> original) {
-        //creditos stackoverflow ^^
+    public <E> List<List<E>> calcularPermutacoesPossiveis(List<E> original) {
         if (original.isEmpty()) {
             List<List<E>> result = new ArrayList<>();
             result.add(new ArrayList<>());
@@ -287,7 +309,7 @@ public class Controller {
         }
         E firstElement = original.remove(0);
         List<List<E>> returnValue = new ArrayList<>();
-        List<List<E>> permutations = generatePerm(original);
+        List<List<E>> permutations = calcularPermutacoesPossiveis(original);
         for (List<E> smallerPermutated : permutations) {
             for (int index=0; index <= smallerPermutated.size(); index++) {
                 List<E> temp = new ArrayList<>(smallerPermutated);
@@ -299,7 +321,7 @@ public class Controller {
     }
 
     /**
-     * Seleciona e devolve os n vertices(utilizadores) com mais vertices adjacentes.
+     * Seleciona e devolve os n utilizadores (vértices) com mais amigos(vertices adjacentes).
      * @param nUtilizadoresPopulares quantidade de utilizadores a selecionar
      * @return Lista contendo os n utilizadores mais populares
      *         Lista pode ter size()< n se existirem menos de n vertices.
@@ -308,11 +330,12 @@ public class Controller {
         ArrayList<User> usersList = (ArrayList<User>)usersGraph.vertices();
         ArrayList<User> result = new ArrayList<>();
 
-        //melhor ou pior que um BFS por vertice?
+        //vs BFS por vértice?
         usersList.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                return usersGraph.outDegree(o2) - usersGraph.outDegree(o1); //suficiente porque grafo é não direcionado
+                //suficiente porque grafo é não direcionado
+                return usersGraph.outDegree(o2) - usersGraph.outDegree(o1);
             }
         });
 
@@ -373,7 +396,7 @@ public class Controller {
         return resultList;
     }
 
-    
+
     /**
      * Performs breadth-first search of a Graph starting in a Vertex and stops after numVertLimit vertices
      * @param g Graph instance

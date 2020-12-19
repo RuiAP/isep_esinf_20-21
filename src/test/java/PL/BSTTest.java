@@ -177,5 +177,28 @@ public class BSTTest {
         System.out.println("posOrder");
         List<Integer> lExpected = Arrays.asList(posorderT);
         assertEquals("posOrder should be "+lExpected.toString(), lExpected, instance.posOrder());
-    }    
+    }
+    @Test
+    public void testFind() {
+        System.out.println("testFind");
+
+        //testar find na raiz
+        Integer expectedResult = new Integer (20);
+        assertEquals("Result should be:"+expectedResult,expectedResult,instance.find(instance.root, expectedResult).getElement());
+
+        //testar find na subárvore esquerda
+        expectedResult = new Integer (7);
+        assertEquals("Result should be:"+expectedResult,expectedResult,instance.find(instance.root, expectedResult).getElement() );
+
+        //testar find na subárvore direita
+        expectedResult = new Integer (50);
+        assertEquals("Result should be:"+expectedResult,expectedResult,instance.find(instance.root, expectedResult).getElement() );
+
+        //testar find com elemento inexistente na árvore
+        expectedResult = null;
+        assertEquals("Result should be: "+expectedResult,expectedResult,instance.find(instance.root,new Integer(1111)) );
+        assertEquals("Result should be: "+expectedResult,expectedResult,instance.find(instance.root,null) );
+        assertEquals("Result should be: "+expectedResult,expectedResult,instance.find(null, new Integer(20)) );
+
+    }
 }

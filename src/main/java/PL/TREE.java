@@ -1,13 +1,7 @@
 
 package PL;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Stack;
+import java.util.*;
 
 /*
  * @author DEI-ESINF
@@ -21,12 +15,22 @@ public class TREE<E extends Comparable<E>> extends BST<E>{
    * @return true if the element exists in tree false otherwise
    */   
     public boolean contains(E element) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (find(this.root, element) == null){
+            return false;
+        }else{
+            return true;
+        }
     }
 
  
     public boolean isLeaf(E element){
-            throw new UnsupportedOperationException("Not supported yet.");
+        Node leaf = find(this.root, element);
+        if(leaf != null && leaf.getRight() == null && leaf.getLeft() == null){
+                return true;
+        }else
+            {
+                return false;
+        }
     }
 
    /*
@@ -38,15 +42,31 @@ public class TREE<E extends Comparable<E>> extends BST<E>{
    * in ascending order and the elements in the right subtree is descending order.
    */
     public Iterable<E> ascdes(){
-            throw new UnsupportedOperationException("Not supported yet.");
+        List<E> result = new ArrayList<>();
+        if(root == null) {return result;}
+        ascSubtree(root.getLeft(), result);
+        result.add(root.getElement());
+        desSubtree(root.getRight(),result);
+        return result;
     }
 
     private void ascSubtree(Node<E> node, List<E> snapshot) {
-            throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return;
+        }
+        ascSubtree(node.getLeft(), snapshot);
+        snapshot.add(node.getElement());
+        ascSubtree(node.getRight(), snapshot);
     }
     
     private void desSubtree(Node<E> node, List<E> snapshot) {
-            throw new UnsupportedOperationException("Not supported yet.");
+        if (node != null){
+            desSubtree(node.getRight(), snapshot);
+            snapshot.add(node.getElement());
+            desSubtree(node.getLeft(), snapshot);
+
+        }
+
     }
    
     /**
@@ -54,18 +74,29 @@ public class TREE<E extends Comparable<E>> extends BST<E>{
     * @return tree without leaves
     */
     public BST<E> autumnTree() {
-           throw new UnsupportedOperationException("Not supported yet.");
+        TREE<E> newTree = new TREE<>();
+        newTree.root = copyRec(this.root()) ;
+
+        return newTree;
     }
     
     private Node<E> copyRec(Node<E> node){
-           throw new UnsupportedOperationException("Not supported yet.");
+        if(node == null || isLeaf(node.getElement())){ return null;}
+
+        return new Node<E>(node.getElement(), copyRec((node.getLeft())),copyRec(node.getRight())  );
+
     }
     
     /**
     * @return the the number of nodes by level.
     */
     public int[] numNodesByLevel(){
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        int result[] = new int[nodesByLevel().size()];
+        for (int i = 0; i < nodesByLevel().size(); i++){
+            result[i] = nodesByLevel().get(i).size();
+        }
+        return result;
     }
     
     private void numNodesByLevel(Node<E> node, int[] result, int level){

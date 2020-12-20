@@ -259,7 +259,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
             return null;
         }
 
-        if(node.element.equals(element)) {
+        if(node.element.compareTo(element) == 0) {
             return node;
         }
         else if(node.element.compareTo(element)>0)
@@ -323,7 +323,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     private void preOrderSubtree(Node<E> node, List<E> snapshot) {
 
         if (node != null){
-            snapshot.add(node.element);
+            snapshot.add(node.getElement());
             preOrderSubtree(node.getLeft(), snapshot);
             preOrderSubtree(node.getRight(), snapshot);
         }
@@ -353,7 +353,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         if (node != null){
             posOrderSubtree(node.getLeft(), snapshot);
             posOrderSubtree(node.getRight(), snapshot);
-            snapshot.add(node.element);
+            snapshot.add(node.getElement());
         }
     }
     

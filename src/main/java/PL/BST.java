@@ -49,7 +49,6 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
 
     protected Node<E> root = null;     // root of the tree
 
-
     /* Constructs an empty binary search tree. */
     public BST() {
         root = null;
@@ -239,6 +238,22 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         }else{
             return biggestElement(node.getRight());
         }
+    }
+
+    /**
+     * Searches for a specific element in the BST.
+     * Returns the element if found, or null if not fund
+     * @param element element to be searched for
+     * @return the element if found, or null if not fund
+     */
+    public E findElement (E element){
+        Node<E> result = find(this.root(),element);
+
+        if (result != null){
+            return result.getElement();
+        }else
+            return null;
+
     }
 
 

@@ -15,6 +15,10 @@ public class S_Symbol implements Comparable<S_Symbol> {
         return pte.getSymbol();
     }
 
+    public PTElement getPTElement() {
+        return pte;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

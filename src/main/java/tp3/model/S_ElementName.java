@@ -15,6 +15,10 @@ public class S_ElementName implements Comparable<S_ElementName> {
         return pte.getElementName();
     }
 
+    public PTElement getPTElement() {
+        return pte;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

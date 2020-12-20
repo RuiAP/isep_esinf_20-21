@@ -15,6 +15,10 @@ public class S_AMass  implements Comparable<S_AMass> {
         return pte.getAtomicMass();
     }
 
+    public PTElement getPTElement() {
+        return pte;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

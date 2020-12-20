@@ -18,13 +18,17 @@ public class S_ANumberTest extends TestCase {
     S_ANumber element4 = new S_ANumber(pte4);
 
 
-    public void testTestEquals() {
+    public void testEquals() {
+        System.out.println("testEquals S_ANumber");
+
         assertEquals(element1, element2);
         assertFalse(element2.equals(element3));
         assertFalse(element3.equals(element4));
     }
 
     public void testCompareTo() {
+        System.out.println("testCompareTo S_ANumber");
+
         List<S_ANumber> listElement = new ArrayList<>();
         listElement.add(element1);
         listElement.add(element4);

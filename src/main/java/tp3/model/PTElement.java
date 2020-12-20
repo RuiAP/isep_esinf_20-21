@@ -12,6 +12,7 @@ public class PTElement {
     private String phase;
     private String mostStableCrystal;
     private String type;
+    private double ionicRadius;
     private double atomicRadius;
     private double electronegativity;
     private double firstIonizationPotential;
@@ -26,7 +27,6 @@ public class PTElement {
     private int displayRow;
     private int displayColumn;
 
-
     /**
      * Constrói um PTElement com toda a informação do elemento da tabela periódica
      * @param atomicNumber
@@ -39,6 +39,7 @@ public class PTElement {
      * @param phase
      * @param mostStableCrystal
      * @param type
+     * @param ionicRadius
      * @param atomicRadius
      * @param electronegativity
      * @param firstIonizationPotential
@@ -54,11 +55,11 @@ public class PTElement {
      * @param displayColumn
      */
     public PTElement(int atomicNumber, String elementName, String symbol, double atomicWeight, double atomicMass,
-                     int period, int group, String phase, String mostStableCrystal, String type, double atomicRadius,
-                     double electronegativity, double firstIonizationPotential, double density, double meltingPoint,
-                     double boilingPoint, int isotopes, String discoverer, int yearOfDiscovery, double specificHeatCapacity,
-                     String electronConfiguration, int displayRow, int displayColumn) {
-
+                     int period, int group, String phase, String mostStableCrystal, String type, double ionicRadius,
+                     double atomicRadius, double electronegativity, double firstIonizationPotential, double density,
+                     double meltingPoint, double boilingPoint, int isotopes, String discoverer, int yearOfDiscovery,
+                     double specificHeatCapacity, String electronConfiguration, int displayRow, int displayColumn)
+    {
         this.atomicNumber = atomicNumber;
         this.elementName = elementName;
         this.symbol = symbol;
@@ -69,6 +70,7 @@ public class PTElement {
         this.phase = phase;
         this.mostStableCrystal = mostStableCrystal;
         this.type = type;
+        this.ionicRadius = ionicRadius;
         this.atomicRadius = atomicRadius;
         this.electronegativity = electronegativity;
         this.firstIonizationPotential = firstIonizationPotential;
@@ -140,6 +142,8 @@ public class PTElement {
         return atomicMass;
     }
 
+
+
     @Override
     public String toString() {
         return "PTElement{" +
@@ -147,4 +151,35 @@ public class PTElement {
                 ", elementName='" + elementName + '\'' +
                 '}';
     }
+
+    public String toString2() {
+        return "PTElement{" +
+                "atomicNumber=" + atomicNumber +
+                ", elementName='" + elementName + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", atomicWeight=" + atomicWeight +
+                ", atomicMass=" + atomicMass +
+                ", period=" + period +
+                ", group=" + group +
+                ", phase='" + phase + '\'' +
+                ", mostStableCrystal='" + mostStableCrystal + '\'' +
+                ", type='" + type + '\'' +
+                ", ionicRadius=" + ionicRadius +
+                ", atomicRadius=" + atomicRadius +
+                ", electronegativity=" + electronegativity +
+                ", firstIonizationPotential=" + firstIonizationPotential +
+                ", density=" + density +
+                ", meltingPoint=" + meltingPoint +
+                ", boilingPoint=" + boilingPoint +
+                ", isotopes=" + isotopes +
+                ", discoverer='" + discoverer + '\'' +
+                ", yearOfDiscovery=" + yearOfDiscovery +
+                ", specificHeatCapacity=" + specificHeatCapacity +
+                ", electronConfiguration='" + electronConfiguration + '\'' +
+                ", displayRow=" + displayRow +
+                ", displayColumn=" + displayColumn +
+                '}';
+    }
+
+
 }

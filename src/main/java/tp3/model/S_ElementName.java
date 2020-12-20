@@ -33,5 +33,12 @@ public class S_ElementName implements Comparable<S_ElementName> {
     public int hashCode() {
         return Objects.hash(pte);
     }
+
+    @Override
+    public String toString() {
+        return "S_ElementName{" +
+                "ElementName=" + this.getElementName() +
+                '}';
+    }
 }
 

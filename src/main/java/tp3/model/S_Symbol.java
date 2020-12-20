@@ -33,5 +33,11 @@ public class S_Symbol implements Comparable<S_Symbol> {
         return Objects.hash(pte);
     }
 
+    @Override
+    public String toString() {
+        return "S_Symbol{" +
+                "Symbol=" + this.getSymbol() +
+                '}';
+    }
 }
 

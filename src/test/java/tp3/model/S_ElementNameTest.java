@@ -18,13 +18,16 @@ public class S_ElementNameTest extends TestCase {
     S_ElementName element4 = new S_ElementName(pte4);
 
 
-    public void testTestEquals() {
+    public void testEquals() {
+        System.out.println("testEquals S_ElementName");
         assertEquals(element1, element2);
         assertFalse(element2.equals(element3));
         assertFalse(element3.equals(element4));
     }
 
     public void testCompareTo() {
+        System.out.println("testCompareTo S_ElementName");
+
         List<S_ElementName> listElement = new ArrayList<>();
         listElement.add(element1);
         listElement.add(element4);

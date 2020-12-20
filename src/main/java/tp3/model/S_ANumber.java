@@ -33,5 +33,12 @@ public class S_ANumber implements Comparable<S_ANumber> {
     public int hashCode() {
         return Objects.hash(pte);
     }
+
+    @Override
+    public String toString() {
+        return "S_ANumber{" +
+                "atomicNumber=" + this.getAtomicNumber() +
+                '}';
+    }
 }
 

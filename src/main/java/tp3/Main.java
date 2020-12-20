@@ -1,5 +1,7 @@
 package tp3;
 
+
+import tp3.model.CarregarFicheiro;
 import tp3.ui.Menu;
 
 /**
@@ -7,13 +9,14 @@ import tp3.ui.Menu;
  */
 public class Main
 {
-    public static final String CSV_FILE_PATH = "src/main/resources/Periodic_Table_of_Elements.CSV";
 
     public static void main( String[] args )
     {
+        CarregarFicheiro cf = new CarregarFicheiro();
+        cf.carregarFicheiroCSV();
 
-        Menu menu = new Menu();
-        menu.display();
+       Menu menu = new Menu();
+        //menu.display();
 
     }
 }

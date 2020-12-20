@@ -21,7 +21,8 @@ public class S_SymbolTest extends TestCase {
     S_Symbol element5 = new S_Symbol(pte5);
 
 
-    public void testTestEquals() {
+    public void testEquals() {
+        System.out.println("testEquals S_Symbol");
         assertEquals(element1, element2);
         assertFalse(element2.equals(element3));
         assertFalse(element3.equals(element4));
@@ -29,6 +30,8 @@ public class S_SymbolTest extends TestCase {
     }
 
     public void testCompareTo() {
+        System.out.println("testCompareTo S_Symbol");
+
 
         List<S_Symbol> listElement = new ArrayList<>();
         listElement.add(element3);

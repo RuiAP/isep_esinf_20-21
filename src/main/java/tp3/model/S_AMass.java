@@ -38,5 +38,11 @@ public class S_AMass  implements Comparable<S_AMass> {
         return Objects.hash(pte);
     }
 
+    @Override
+    public String toString() {
+        return "S_AMass{" +
+                "atomicMass=" + this.getAtomicMass() +
+                '}';
+    }
 }
 

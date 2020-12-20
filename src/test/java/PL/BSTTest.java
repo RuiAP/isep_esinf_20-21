@@ -130,7 +130,20 @@ public class BSTTest {
         assertEquals(new Integer(8), instance.smallestElement());
         instance.remove(8);
         assertEquals(new Integer(10), instance.smallestElement());
-    }    
+    }
+
+    /**
+     * Test of smallestelement method, of class TREE.
+     */
+    @Test
+    public void testBiggestElement() {
+        System.out.println("biggestElement");
+        assertEquals(new Integer(50), instance.biggestElement());
+        instance.remove(50);
+        assertEquals(new Integer(40), instance.biggestElement());
+        instance.remove(40);
+        assertEquals(new Integer(30), instance.biggestElement());
+    }
 /**
      * Test of processBstByLevel method, of class TREE.
      */
@@ -201,4 +214,6 @@ public class BSTTest {
         assertEquals("Result should be: "+expectedResult,expectedResult,instance.find(null, new Integer(20)) );
 
     }
+
+
 }

@@ -92,6 +92,7 @@ public class TREETest {
     @Test
     public void testnumNodesByLevel() {
         System.out.println("numNodesByLevel");
+        System.out.println(nnodes);
         assertArrayEquals( nnodes, instance.numNodesByLevel());
-    }  
+    }
 }

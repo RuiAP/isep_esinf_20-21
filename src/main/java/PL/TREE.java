@@ -92,15 +92,29 @@ public class TREE<E extends Comparable<E>> extends BST<E>{
     */
     public int[] numNodesByLevel(){
 
+/*
         int result[] = new int[nodesByLevel().size()];
         for (int i = 0; i < nodesByLevel().size(); i++){
             result[i] = nodesByLevel().get(i).size();
         }
         return result;
+
+ */     if (root==null) {return null;}
+
+        int result[] = new int[this.height()+1];    //-------------??
+        System.out.println(height());
+
+        numNodesByLevel(this.root(),result, 0);
+
+        return result;
     }
     
     private void numNodesByLevel(Node<E> node, int[] result, int level){
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {return;}
+        result[level]++;
+        numNodesByLevel(node.getLeft(), result, level+1);
+        numNodesByLevel(node.getRight(), result, level+1);
+
     }
 
 }

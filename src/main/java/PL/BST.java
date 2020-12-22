@@ -241,6 +241,36 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     }
 
     /**
+     *
+     * @param lowerElement
+     * @param upperElement
+     * @return
+     */
+    public Iterable<E> findBetween(E lowerElement, E upperElement){
+        if (lowerElement == null || upperElement == null){
+            return null;
+        }
+        List<E> results = new ArrayList<>();
+        findBetween(this.root(), lowerElement, upperElement, results);
+        return results;
+    }
+
+
+  public void findBetween(Node<E> node, E lowerElement, E upperElement, List<E> results){
+        if (node == null){
+            return;
+        }
+        if(node.getElement().compareTo(lowerElement) >= 0 && node.getElement().compareTo(upperElement) <= 0){
+            results.add(node.getElement());
+        }
+        //iterar por todos ou selecionar esquerda/direita consuante é maior/menor que um dos limites??
+        findBetween(node.getLeft(), lowerElement, upperElement, results);
+        findBetween(node.getRight(), lowerElement, upperElement, results);
+
+    }
+
+
+    /**
      * Searches for a specific element in the BST.
      * Returns the element if found, or null if not fund
      * @param element element to be searched for
@@ -253,9 +283,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
             return result.getElement();
         }else
             return null;
-
     }
-
 
     /**
      * Returns the Node containing a specific Element, or null otherwise.

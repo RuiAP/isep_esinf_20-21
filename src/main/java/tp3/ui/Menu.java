@@ -12,11 +12,11 @@ public class Menu {
     public void display(){
 
         ArrayList<String> listaOpcoes = new ArrayList<>();
-        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por Atomic Number");
-        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por Element");
-        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por Symbol");
-        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por Atomic Mass");
-        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por intervalo de valores de Atomic Mass");
+        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por número atómico");
+        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por nome do elemento");
+        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por símbolo");
+        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por massa atómica");
+        listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por intervalo de valores de massa atómica");
         listaOpcoes.add(1+listaOpcoes.size() +". Lista de configurações eletrónicas repetidas");
         listaOpcoes.add(1+listaOpcoes.size() +". BST com configurações repetidas");
         listaOpcoes.add(1+listaOpcoes.size() +". As duas configurações mais distantes");

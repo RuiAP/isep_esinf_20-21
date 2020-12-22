@@ -142,7 +142,15 @@ public class PTElement {
         return atomicMass;
     }
 
+//getters para o comparator de ordenação -> ponto 1.b
+    public String getDiscoverer() { return discoverer; }
 
+    public int getYearOfDiscovery() { return yearOfDiscovery;}
+//getters para a tabela do ponto 1.a
+
+    public String getPhase() { return phase; }
+
+    public String getType() { return type;}
 
     @Override
     public String toString() {
@@ -153,7 +161,7 @@ public class PTElement {
     }
 
     public String toString2() {
-        return "PTElement{" +
+        return elementName+" - ("+
                 "atomicNumber=" + atomicNumber +
                 ", elementName='" + elementName + '\'' +
                 ", symbol='" + symbol + '\'' +
@@ -178,7 +186,7 @@ public class PTElement {
                 ", electronConfiguration='" + electronConfiguration + '\'' +
                 ", displayRow=" + displayRow +
                 ", displayColumn=" + displayColumn +
-                '}';
+                ')';
     }
 
 

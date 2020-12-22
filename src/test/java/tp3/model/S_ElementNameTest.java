@@ -8,14 +8,10 @@ import java.util.List;
 
 public class S_ElementNameTest extends TestCase {
 
-    PTElement pte1 = new PTElement("elemento teste");
-    PTElement pte2 = new PTElement("elemento teste");
-    PTElement pte3 = new PTElement("elemento");
-    PTElement pte4 = new PTElement("atómico");
-    S_ElementName element1 = new S_ElementName(pte1);
-    S_ElementName element2 = new S_ElementName(pte2);
-    S_ElementName element3 = new S_ElementName(pte3);
-    S_ElementName element4 = new S_ElementName(pte4);
+    S_ElementName element1 = new S_ElementName("elemento teste");
+    S_ElementName element2 = new S_ElementName("elemento teste");
+    S_ElementName element3 = new S_ElementName("elemento");
+    S_ElementName element4 = new S_ElementName("atómico");
 
 
     public void testEquals() {

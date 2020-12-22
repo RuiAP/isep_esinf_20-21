@@ -8,16 +8,11 @@ import java.util.List;
 
 public class S_AMassTest extends TestCase {
 
-    PTElement pte1 = new PTElement(18.151515);
-    PTElement pte2 = new PTElement(18.151515);
-    PTElement pte3 = new PTElement(18.151516);
-    PTElement pte4 = new PTElement(26.2525252);
-    PTElement pte5 = new PTElement(4.555555555);
-    S_AMass element1 = new S_AMass(pte1);
-    S_AMass element2 = new S_AMass(pte2);
-    S_AMass element3 = new S_AMass(pte3);
-    S_AMass element4 = new S_AMass(pte4);
-    S_AMass element5 = new S_AMass(pte5);
+    S_AMass element1 = new S_AMass(18.151515);
+    S_AMass element2 = new S_AMass(18.151515);
+    S_AMass element3 = new S_AMass(18.151516);
+    S_AMass element4 = new S_AMass(26.2525252);
+    S_AMass element5 = new S_AMass(4.555555555);
 
 
     public void testEquals() {

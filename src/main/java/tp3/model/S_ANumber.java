@@ -2,11 +2,15 @@ package tp3.model;
 
 import java.util.Objects;
 
-public class S_ANumber implements Comparable<S_ANumber> {
+public class S_ANumber implements Comparable<S_ANumber>,tagSearchable {
 
     private PTElement pte;
 
-    public S_ANumber (PTElement pte){
+    public S_ANumber (int atomicNumber){
+        this.pte = new PTElement(atomicNumber);
+    }
+
+    public S_ANumber(PTElement pte){
         this.pte = pte;
     }
 

@@ -8,14 +8,10 @@ import java.util.List;
 
 public class S_ANumberTest extends TestCase {
 
-    PTElement pte1 = new PTElement(5);
-    PTElement pte2 = new PTElement(5);
-    PTElement pte3 = new PTElement(15);
-    PTElement pte4 = new PTElement(7);
-    S_ANumber element1 = new S_ANumber(pte1);
-    S_ANumber element2 = new S_ANumber(pte2);
-    S_ANumber element3 = new S_ANumber(pte3);
-    S_ANumber element4 = new S_ANumber(pte4);
+    S_ANumber element1 = new S_ANumber(5);
+    S_ANumber element2 = new S_ANumber(5);
+    S_ANumber element3 = new S_ANumber(15);
+    S_ANumber element4 = new S_ANumber(7);
 
 
     public void testEquals() {

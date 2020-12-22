@@ -2,9 +2,13 @@ package tp3.model;
 
 import java.util.Objects;
 
-public class S_Symbol implements Comparable<S_Symbol> {
+public class S_Symbol implements Comparable<S_Symbol>,tagSearchable {
 
     private PTElement pte;
+
+    public S_Symbol(String symbol_str){
+        this.pte = new PTElement(symbol_str, true);
+    }
 
     public S_Symbol(PTElement pte){
         this.pte = pte;

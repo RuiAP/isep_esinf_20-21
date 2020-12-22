@@ -1,6 +1,8 @@
 package tp3.model;
 
 import PL.BST;
+import PL.TREE_WORDS;
+import PL.TextWord;
 import junit.framework.TestCase;
 
 public class CarregarFicheiroTest extends TestCase {
@@ -31,6 +33,7 @@ public class CarregarFicheiroTest extends TestCase {
     private BST<S_ANumber> bstANumber;
     private BST<S_ElementName> bstElementName;
     private BST<S_Symbol> bstSymbol;
+    private TREE_WORDS bstConfig;
 
     public CarregarFicheiroTest(){
         cf = new CarregarFicheiro();
@@ -39,6 +42,7 @@ public class CarregarFicheiroTest extends TestCase {
         bstANumber = cf.getBstANumber();
         bstElementName = cf.getBstElementName();
         bstSymbol = cf.getBstSymbol();
+        bstConfig = cf.getBstConfig();
     }
 
 
@@ -52,6 +56,8 @@ public class CarregarFicheiroTest extends TestCase {
         assertEquals("O ficheiro csv tem 118 elementos.",expectedSize,bstANumber.size() );
         assertEquals("O ficheiro csv tem 118 elementos.",expectedSize,bstElementName.size() );
         assertEquals("O ficheiro csv tem 118 elementos.",expectedSize,bstSymbol.size() );
+        expectedSize = 96;//existem 1 elemento (vazio) repetido 23 vezes
+        assertEquals("O ficheiro csv tem 118 elementos.",expectedSize,bstConfig.size() );
 
         //Extremos bstAMass
         S_AMass expectedResult = new S_AMass(hydrogen);
@@ -81,6 +87,14 @@ public class CarregarFicheiroTest extends TestCase {
         assertEquals("'Actinium (Ac)' é o primeiro símbolo por ordem alfabética. ",expectedResult4, bstSymbol.smallestElement() );
         expectedResult4 = new S_Symbol(zirconium);
         assertEquals("'Zirconium (Zr)' é o último símolo por ordem alfabética. ",expectedResult4, bstSymbol.biggestElement() );
+
+        //Extremos bstConfig
+        //ordem alfabética -> "", 1s1, 1s2, [Ar]..., [Xe]..., [Xe] 6s2.
+        TextWord expectedResult5 = new TextWord("", 1);
+        assertEquals("'<Empty>(sem configuração)' é o primeiro valor de configuração eletrónica por ordem alfabética. ",expectedResult5.getWord(), bstConfig.smallestElement().getWord() );
+        expectedResult5 = new TextWord("[Xe] 6s2", 1);
+        assertEquals("'Barium (Ba) - [Xe] 6s2' é o último símolo por ordem alfabética. ",expectedResult5.getWord(), bstConfig.biggestElement().getWord() );
+
 
     }
 }

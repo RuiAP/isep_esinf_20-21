@@ -2,9 +2,13 @@ package tp3.model;
 
 import java.util.Objects;
 
-public class S_ElementName implements Comparable<S_ElementName> {
+public class S_ElementName implements Comparable<S_ElementName>, tagSearchable {
 
     private PTElement pte;
+
+    public S_ElementName(String elementName){
+        this.pte = new PTElement(elementName);
+    }
 
     public S_ElementName(PTElement pte){
         this.pte = pte;

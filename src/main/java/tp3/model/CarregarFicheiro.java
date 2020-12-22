@@ -1,6 +1,8 @@
 package tp3.model;
 
 import PL.BST;
+import PL.TREE_WORDS;
+import PL.TextWord;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +16,7 @@ public class CarregarFicheiro {
     private BST<S_ANumber> bstANumber;
     private BST<S_ElementName> bstElementName;
     private BST<S_Symbol> bstSymbol;
+    private TREE_WORDS bstConfig;
 
     public static final String CSV_FILE_PATH = "src/main/resources/Periodic_Table_of_Elements.CSV";
     public static final int REPLACE_EMPTY = -1;
@@ -42,6 +45,7 @@ public class CarregarFicheiro {
         bstANumber = new BST<>();
         bstElementName = new BST<>();
         bstSymbol = new BST<>();
+        bstConfig = new TREE_WORDS();
     }
 
 
@@ -119,6 +123,9 @@ public class CarregarFicheiro {
 
                 S_Symbol s4 = new S_Symbol(pte);
                 bstSymbol.insert(s4);
+
+                TextWord t1 = new TextWord(dados[21], 1);
+                bstConfig.insert(t1);
             }
 
 
@@ -148,5 +155,9 @@ public class CarregarFicheiro {
 
     public BST<S_Symbol> getBstSymbol() {
         return bstSymbol;
+    }
+
+    public TREE_WORDS getBstConfig() {
+        return bstConfig;
     }
 }

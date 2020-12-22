@@ -8,17 +8,11 @@ import java.util.List;
 
 public class S_SymbolTest extends TestCase {
 
-
-    PTElement pte1 = new PTElement("Pd", true);
-    PTElement pte2 = new PTElement("Pd", true);
-    PTElement pte3 = new PTElement("pd", true);
-    PTElement pte4 = new PTElement("Cf", true);
-    PTElement pte5 = new PTElement("Mg",true);
-    S_Symbol element1 = new S_Symbol(pte1);
-    S_Symbol element2 = new S_Symbol(pte2);
-    S_Symbol element3 = new S_Symbol(pte3);
-    S_Symbol element4 = new S_Symbol(pte4);
-    S_Symbol element5 = new S_Symbol(pte5);
+    S_Symbol element1 = new S_Symbol("Pd");
+    S_Symbol element2 = new S_Symbol("Pd");
+    S_Symbol element3 = new S_Symbol("pd");
+    S_Symbol element4 = new S_Symbol("Cf");
+    S_Symbol element5 = new S_Symbol("Mg");
 
 
     public void testEquals() {

@@ -2,9 +2,13 @@ package tp3.model;
 
 import java.util.Objects;
 
-public class S_AMass  implements Comparable<S_AMass> {
+public class S_AMass  implements Comparable<S_AMass>, tagSearchable {
 
     private PTElement pte;
+
+    public S_AMass(double atomicMass){
+        this.pte = new PTElement(atomicMass);
+    }
 
     public S_AMass(PTElement pte){
         this.pte = pte;

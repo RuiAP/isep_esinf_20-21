@@ -3,11 +3,7 @@ package PL;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -16,7 +12,7 @@ import java.util.Scanner;
 public class TREE_WORDS extends BST<TextWord> {
     
     public void createTree() throws FileNotFoundException{
-        Scanner readfile = new Scanner(new File("src/PL/xxx.xxx"));
+        Scanner readfile = new Scanner(new File("src/main/java/PL/xxx.xxx"));
         while(readfile.hasNextLine()){
             String[] pal = readfile.nextLine().split("(\\,)|(\\s)|(\\.)");
             for(String word : pal)
@@ -31,12 +27,47 @@ public class TREE_WORDS extends BST<TextWord> {
        * @param element
      */
     @Override
+    //Igual ao método super.insert mas necessário, caso contrário o metodo super.insert vai invocar o metodo "insert" da BST e nao o insert da TREE_WORDS
     public void insert(TextWord element){
-        root = insert(element, root);
+        if (element == null) {
+            return;
+        }
+        //se a BST estiver vazia coloca-se o element na raiz
+        if (this.isEmpty()) {
+            root = new Node(element, null, null);
+        } else {
+            this.insert(element, root);
+        }
     }
-    
+
+
+    /**
+     *
+     * @param element
+     * @param node
+     * @return
+     */
+    //a unica diferença face ao super.insert é que aumenta a ocurrencia em vez de devolver null
     private Node<TextWord> insert(TextWord element, Node<TextWord> node){
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node.getElement().compareTo(element) == 0) {
+            node.getElement().incOcorrences();
+            return node;
+        }
+
+        if (node.getElement().compareTo(element) > 0) {
+            if (node.getLeft() == null) {
+                node.setLeft(new Node(element, null, null));
+                return node.getLeft();
+            }
+            insert(element, node.getLeft());
+        } else {
+            if (node.getRight() == null) {
+                node.setRight(new Node(element, null, null));
+                return node.getRight();
+            }
+            insert(element, node.getRight());
+        }
+        return null;
 
     }
 
@@ -45,7 +76,41 @@ public class TREE_WORDS extends BST<TextWord> {
      * @return a map with a list of words for each occurrence found.
      */
     public Map<Integer,List<String>> getWordsOccurrences(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashMap<Integer, List<String>> results = new HashMap<>();
+
+        getWordsOccurrencesRec(this.root(), results);
+        return results;
+
+    }
+
+    /**
+     * Itereatres through the tree (starting at "node") and fills the map with the occurrences and respective list of words
+     * @param node root of the subtree to be searched
+     * @param results map with a list of words for each occurrence found
+     */
+    private void getWordsOccurrencesRec(Node<TextWord> node, Map<Integer,List<String>> results){
+
+        if (node == null || results == null){ return; }
+
+        List<String>listWords;
+        int ocorrences = node.getElement().getOcorrences();
+
+        //Se for a primeira vez que se econtra esta quantidade de occurencias cria uma lista nova e coloca-a no mapa.
+        // Caso contrario recupera a lista respectiva a este numero de ocurrencias
+        if (results.get(ocorrences) == null){
+            listWords = new ArrayList<>();
+            results.put(ocorrences, listWords);
+        }
+        else{
+            listWords = results.get(ocorrences);
+        }
+
+        getWordsOccurrencesRec(node.getLeft(), results);
+        //addiciona o elemento à lista de palavras
+        listWords.add(node.getElement().getWord());
+        //percorre a subàrvore esquerda e direita
+
+        getWordsOccurrencesRec(node.getRight(), results);
 
     }
 

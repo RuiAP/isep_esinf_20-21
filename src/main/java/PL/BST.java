@@ -84,22 +84,22 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         }
     }
 
-    private Node<E> insert(E element, Node<E> node) {             //é suposto retornar o node pai ou o node criado??##
-        //suponho que o node criado seja mais util
-        if (node.element.equals(element)) {
+    private Node<E> insert(E element, Node<E> node) {
+        //retorna o node criado
+        if (node.getElement().compareTo(element) == 0) {
             return null;
         }
 
-        if (node.element.compareTo(element) > 0) {
+        if (node.getElement().compareTo(element) > 0) {
             if (node.getLeft() == null) {
                 node.setLeft(new Node(element, null, null));
-                return node;
+                return node.getLeft();
             }
             insert(element, node.getLeft());
         } else {
             if (node.getRight() == null) {
                 node.setRight(new Node(element, null, null));
-                return node;
+                return node.getRight();
             }
             insert(element, node.getRight());
         }

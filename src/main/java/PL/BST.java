@@ -171,11 +171,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
     */
     public int height(){
-            if (this.isEmpty()) {
-                return -1;
-            }else{
-               return height(root);
-            }
+        return height(root);
     }
 
     /**
@@ -184,21 +180,19 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
     */  
     protected int height(Node<E> node){
-        if(node == null){ return 0;}
+        if(node == null){ return -1;}
         int leftHeight = 0;
         int rightHeight = 0;
 
-        if (node.getLeft()!= null) {
-            leftHeight++;
-            leftHeight += height(node.getLeft());
-        }
+        leftHeight = height(node.getLeft());
+        rightHeight = height(node.getRight());
 
-        if (node.getRight()!= null) {
-           rightHeight++;
-           rightHeight += height(node.getRight());
+        if(leftHeight > rightHeight){
+            return leftHeight+1;
         }
-
-            return Math.max(rightHeight, leftHeight);
+        else{
+            return rightHeight+1;
+        }
     }
 
 
@@ -389,7 +383,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
             return 0;
     }
 
-    
+
 
         /**
         * Returns the smallest element within the tree.

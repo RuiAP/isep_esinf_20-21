@@ -1,9 +1,6 @@
 package tp3.model;
 
-import PL.BST;
-import PL.TREE_WORDS;
-import PL.TREE_WORDS_REP;
-import PL.TextWord;
+import PL.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,11 +10,11 @@ import java.util.Scanner;
 
 public class CarregarFicheiro {
 
-    private BST<S_AMass> bstAMass;
-    private BST<S_ANumber> bstANumber;
-    private BST<S_ElementName> bstElementName;
-    private BST<S_Symbol> bstSymbol;
-    private TREE_WORDS_REP bstConfig;
+    private AVL<S_AMass> bstAMass;
+    private AVL<S_ANumber> bstANumber;
+    private AVL<S_ElementName> bstElementName;
+    private AVL<S_Symbol> bstSymbol;
+    private TREE_WORDS bstConfig;
 
     public static final String CSV_FILE_PATH = "src/main/resources/Periodic_Table_of_Elements.CSV";
     public static final int REPLACE_EMPTY = -1;
@@ -42,11 +39,11 @@ public class CarregarFicheiro {
 
 
     public CarregarFicheiro() {
-        bstAMass = new BST<>();
-        bstANumber = new BST<>();
-        bstElementName = new BST<>();
-        bstSymbol = new BST<>();
-        bstConfig = new TREE_WORDS_REP();
+        bstAMass = new AVL<>();
+        bstANumber = new AVL<>();
+        bstElementName = new AVL<>();
+        bstSymbol = new AVL<>();
+        bstConfig = new TREE_WORDS();
     }
 
 
@@ -125,7 +122,7 @@ public class CarregarFicheiro {
                 S_Symbol s4 = new S_Symbol(pte);
                 bstSymbol.insert(s4);
 
-                TextWord t1 = new TextWord(dados[21], 1); //neste caso são repetições e não ocorrências, por isso não deveria ser zero?
+                TextWord t1 = new TextWord(dados[21], 1);
                 bstConfig.insert(t1);
             }
 
@@ -142,23 +139,23 @@ public class CarregarFicheiro {
 
     }
 
-    public BST<S_AMass> getBstAMass() {
+    public AVL<S_AMass> getBstAMass() {
         return bstAMass;
     }
 
-    public BST<S_ANumber> getBstANumber() {
+    public AVL<S_ANumber> getBstANumber() {
         return bstANumber;
     }
 
-    public BST<S_ElementName> getBstElementName() {
+    public AVL<S_ElementName> getBstElementName() {
         return bstElementName;
     }
 
-    public BST<S_Symbol> getBstSymbol() {
+    public AVL<S_Symbol> getBstSymbol() {
         return bstSymbol;
     }
 
-    public TREE_WORDS_REP getBstConfig() {
+    public TREE_WORDS getBstConfig() {
         return bstConfig;
     }
 }

@@ -17,8 +17,7 @@ public class Menu {
         listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por símbolo");
         listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por massa atómica");
         listaOpcoes.add(1+listaOpcoes.size() +". Pesquisa por intervalo de valores de massa atómica");
-        listaOpcoes.add(1+listaOpcoes.size() +". Lista de configurações eletrónicas repetidas");
-        listaOpcoes.add(1+listaOpcoes.size() +". BST com configurações repetidas");
+        listaOpcoes.add(1+listaOpcoes.size() +". Listar as configurações eletrónicas repetidas");
         listaOpcoes.add(1+listaOpcoes.size() +". As duas configurações mais distantes");
         listaOpcoes.add(1+listaOpcoes.size() +". Árvore binária completa com configurações eletrónicas únicas");
         listaOpcoes.add(1+listaOpcoes.size() +". " +"Sair da aplicação.");
@@ -54,12 +53,9 @@ public class Menu {
                     ui.configuracoesRepetidas_2a();
                     break;
                 case 7:
-                    ui.BSTconfiguracoesRepetidas_2b();
-                    break;
-                case 8:
                     ui.configuracoesMaisDistantes_2c();
                     break;
-                case 9:
+                case 8:
                     ui.ABCConfiguracoes_2d();
                     break;
 

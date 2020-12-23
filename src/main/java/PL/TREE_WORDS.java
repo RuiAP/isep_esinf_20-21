@@ -1,6 +1,7 @@
 
 package PL;
 
+import javax.xml.soap.Text;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -111,6 +112,48 @@ public class TREE_WORDS extends BST<TextWord> {
         //percorre a subàrvore esquerda e direita
 
         getWordsOccurrencesRec(node.getRight(), results);
+    }
+
+    /**
+     * Creates a tree with all the possible electronic configurations and their number of repetitions
+     * @return return the tree with possible configuration as elements
+     */
+    public TREE_WORDS countConfigRepetitions(){
+
+        TREE_WORDS repeatedConfig = new TREE_WORDS();
+
+        countConfigRepetitions(this.root(), repeatedConfig);
+        return repeatedConfig;
+
+    }
+
+    /**
+     * Recursive method to iterate through the tree and count repeated configurations
+     * @param node
+     * @param repeatedConfig
+     */
+    private void countConfigRepetitions(Node<TextWord> node, TREE_WORDS repeatedConfig){
+
+        if (node == null){ return; }
+
+
+        String[] partes = node.getElement().getWord().trim().split(" ");
+        ArrayList<String> padraoConfig = new ArrayList<>(Arrays.asList(partes));
+        padraoConfig.add (node.getElement().getWord());
+
+
+        for(String str : padraoConfig){
+
+            if( repeatedConfig.find(repeatedConfig.root(), new TextWord(str,0) )== null ){
+                repeatedConfig.insert(new TextWord(str, 0));
+            }else{
+                repeatedConfig.find(repeatedConfig.root(), new TextWord(str,0)).getElement().incOcorrences(); //se ja existir aumentamos o numero de occurrencias
+            }
+        }
+
+        countConfigRepetitions(node.getLeft(), repeatedConfig);
+        countConfigRepetitions(node.getRight(), repeatedConfig);
+
 
     }
 

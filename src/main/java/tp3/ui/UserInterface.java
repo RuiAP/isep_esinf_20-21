@@ -2,7 +2,6 @@ package tp3.ui;
 
 import PL.BST;
 import PL.TREE_WORDS;
-import PL.TREE_WORDS_REP;
 import PL.TextWord;
 import tp3.model.CarregarFicheiro;
 import tp3.model.*;
@@ -186,26 +185,24 @@ public class UserInterface {
      * número de repetições.
      */
     public void configuracoesRepetidas_2a() {
-        TREE_WORDS_REP bstConfig= cf.getBstConfig();
 
-        ArrayList<TextWord> max = new ArrayList<>();
-        for(TextWord t :bstConfig.inOrder()){
-            if (t.getOcorrences()>2){
-                max.add(t);
-            }
-        }
+        TREE_WORDS configs = cf.getBstConfig();
+        TREE_WORDS padroesRepetidos = configs.countConfigRepetitions();
 
-        max.sort(new Comparator<TextWord>() {
+        ArrayList<TextWord> resultado = (ArrayList<TextWord>) padroesRepetidos.inOrder();
+
+        resultado.sort(new Comparator<TextWord>() {
             @Override
             public int compare(TextWord o1, TextWord o2) {
                 return o2.getOcorrences() - o1.getOcorrences();
             }
         });
 
-        for (TextWord tt: max){
-            System.out.println(tt);
+        for (TextWord t : resultado){
+            if (t.getOcorrences() > 1){
+                System.out.println(t.getOcorrences() + " \t" + t.getWord());
+            }
         }
-
 
     }
 
@@ -215,9 +212,8 @@ public class UserInterface {
      * @return devolve a BST criada
      */
     public TREE_WORDS BSTconfiguracoesRepetidas_2b() {
-        //list ou map = configuracoesRepetidas_2a;
-        //uma vez que da alinea anterior não está correta
-        //criou-se um map com os valores mostrados no enunciado
+        //uma vez que da alinea anterior não está completa
+        //optei por criar um map com os valores mostrados no enunciado e inseri-lo numa nova BST
         LinkedHashMap<Integer, ArrayList<String>> valores = new LinkedHashMap<>();
         ArrayList<String> configs32 = new ArrayList<>();
         configs32.add("[Xe]");
@@ -267,6 +263,7 @@ public class UserInterface {
     public void configuracoesMaisDistantes_2c() {
         //recupera o mapa do ponto anterior
         TREE_WORDS bstConfigsRepetidas = BSTconfiguracoesRepetidas_2b();
+        System.out.println(bstConfigsRepetidas);
 
         //calcula os nodes à distancia máxima (resultado em foram de Map)
         HashMap<Integer, ArrayList<TextWord>>  result = bstConfigsRepetidas.nodesAtMaxDistance();

@@ -252,43 +252,171 @@ public class BSTTest {
     @Test
     public void testCommonAncestor() {
         System.out.println("testCommonAncestor");
-        System.out.println(
-                instance.commonAncestor(instance.root(), new BST.Node<Integer>(new Integer(10), null, null), new BST.Node<Integer>(new Integer(15), null, null) ).getElement()
-        );
-        assertTrue(false);
+
+        //7 pertence à subàrvore esquerda e 50 à subàrvore direita -> ancestor = root(20)
+        int expectedResult=20;
+        int result = instance.commonAncestor(instance.root(), new Integer(7),new Integer(50)).getElement();
+        assertEquals("Result should be: ", expectedResult, result);
+
+        //7 e 13 pertencem ambos à subàrvore esquerda -> ancestor = 10
+        expectedResult=10;
+        result = instance.commonAncestor(instance.root(), new Integer(7),new Integer(13)).getElement();
+        assertEquals("Result should be: ", expectedResult, result);
+
+        //10 é antecessor comum de 10 e 13. Um dos elementos é o próprio antecessor comum
+        expectedResult=10;
+        result = instance.commonAncestor(instance.root(), new Integer(13),new Integer(10)).getElement();
+        assertEquals("Result should be: ", expectedResult, result);
+
+        //dois valores iguais devem retornar o próprio valor como antecessor comum
+        expectedResult=30;
+        result = instance.commonAncestor(instance.root(), new Integer(30),new Integer(30)).getElement();
+        assertEquals("Result should be: ", expectedResult, result);
+
+        //se um dos valores não pertencer à arvore deve retornar null
+        assertNull(instance.commonAncestor(instance.root(), new Integer(79),new Integer(125)) ); //2 elementos não pertencem
+        assertNull(instance.commonAncestor(instance.root(), new Integer(79),new Integer(20)) ); //1º elemento nao pertence
+        assertNull(instance.commonAncestor(instance.root(), new Integer(30),new Integer(79)) );  //2º elemento não pertence
+
+        //se existem argumentos null deve retornar null
+        assertNull(instance.commonAncestor(null, new Integer(7),new Integer(50)) );
+        assertNull(instance.commonAncestor(instance.root(), new Integer(7),null) );
+        assertNull(instance.commonAncestor(instance.root(), null,new Integer(50)) );
+
 
     }
     @Test
     public void testDistanceBetweenNodes() {
         System.out.println("testDistanceBetweenNodes");
 
+        //se existirem argumentos null ou que não pertençam à àrvore deve retornar null
+        int expectedResult = -1;
+        int result = instance.distanceBetweenNodes(instance.root().getElement(), null);
+        assertEquals("Result should be:", expectedResult, result);
+        result = instance.distanceBetweenNodes(null, instance.root().getElement());
+        assertEquals("Result should be:", expectedResult, result);
+        result = instance.distanceBetweenNodes(99, instance.root().getElement());
+        assertEquals("Result should be:", expectedResult, result);
+        result = instance.distanceBetweenNodes(instance.root().getElement(),99);
+        assertEquals("Result should be:", expectedResult, result);
+
         //distancia para a raiz deve ser zero
-        int expectedResult = 0;
-        int result = instance.distanceBetweenNodes(instance.root(), instance.root());
+        expectedResult = 0;
+        result = instance.distanceBetweenNodes(instance.root().getElement(), instance.root().getElement());
         assertEquals("Result should be:", expectedResult, result);
 
         //distancia entre a raiz e extremo direito
         expectedResult = 2;
-        result = instance.distanceBetweenNodes(instance.root(),
-                                                new BST.Node<Integer>(new Integer(50), null, null));
+        result = instance.distanceBetweenNodes( instance.root().getElement(), new Integer(50) );
         assertEquals("Result should be:", expectedResult, result);
 
         //distancia entre raiz e extremo esquerdo
         expectedResult = 4;
-        result = instance.distanceBetweenNodes(instance.root(),
-                                                new BST.Node<Integer>(new Integer(7), null, null));
+        result = instance.distanceBetweenNodes( instance.root().getElement(), new Integer(7) );
         assertEquals("Result should be:", expectedResult, result);
 
         //distancia entre extremo esquero e extremo direito
         expectedResult = 6;
-        result = instance.distanceBetweenNodes(new BST.Node<Integer>(new Integer(7), null, null),
-                                                new BST.Node<Integer>(new Integer(50), null, null));
+        result = instance.distanceBetweenNodes( new Integer(7), new Integer(50) );
         assertEquals("Result should be:", expectedResult, result);
 
         //distancia entre dois nodes de uma subarvore
         expectedResult = 3;
-        result = instance.distanceBetweenNodes(new BST.Node<Integer>(new Integer(7), null, null),
-                                                new BST.Node<Integer>(new Integer(13), null, null));
+        result = instance.distanceBetweenNodes( new Integer(7),new Integer(13) );
         assertEquals("Result should be:", expectedResult, result);
+    }
+
+    @Test
+    public void testNodesAtMaxDistance() {
+        System.out.println("testNodesAtMaxDistance");
+
+        HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
+        ArrayList<Integer> expectedNodesList = new ArrayList<>();
+        int expectedMaxDist;
+
+        HashMap<Integer, ArrayList<Integer>> resultMap;
+        ArrayList<Integer> resultNodesList = new ArrayList<>();
+        int resultMaxDist;
+
+
+        //--------------------------------test distance---------------------------
+        resultMap = instance.nodesAtMaxDistance();
+        expectedMaxDist = 6;
+        assertEquals("Max distance should be:", expectedMaxDist, resultMap.keySet().toArray()[0]);
+
+        //removendo os 2 nodes mais à direita diminui a disntânca máxima
+        instance.remove(30);
+        instance.remove(50);
+        expectedMaxDist = 5;
+        resultMap = instance.nodesAtMaxDistance();
+        assertEquals("Max distance should be:", expectedMaxDist, resultMap.keySet().toArray()[0]);
+
+        //removendo o node mais à esquerda diminui a distancia máxima
+        instance.remove(07);
+        expectedMaxDist = 4;
+        resultMap = instance.nodesAtMaxDistance();
+        assertEquals("Max distance should be:", expectedMaxDist, resultMap.keySet().toArray()[0]);
+
+        //inserindo nodes 18 e 19 (vão ser inseridos a partir do 17) só aumenta a distancia em 1 unidade
+        instance.insert(18);
+        instance.insert(19);
+        expectedMaxDist = 5;
+        resultMap = instance.nodesAtMaxDistance();
+        assertEquals("Max distance should be:", expectedMaxDist, resultMap.keySet().toArray()[0]);
+
+
+        //se a raiz for null deve retornar null
+        instance = new BST<>();
+        assertNull(instance.nodesAtMaxDistance() );
+
+        //se a àrvore for só um node, deve retornar null
+        instance = new BST<>();
+        instance.insert(20);
+        assertNull(instance.nodesAtMaxDistance() );
+
+
+        //-------------------------------test nodes----------------------------
+
+        instance = new BST();   //restores the BST instance
+        for(int i :arr)
+            instance.insert(i);
+
+        expectedNodesList.add(7);
+        expectedNodesList.add(30);
+        expectedNodesList.add(7);
+        expectedNodesList.add(50);
+        expectedMaxDist = 6;
+        expectedMap.put(expectedMaxDist,expectedNodesList);
+
+        resultMap = instance.nodesAtMaxDistance();
+        resultMaxDist = (int) resultMap.keySet().toArray()[0];
+        resultNodesList = resultMap.get(resultMaxDist);
+
+        for (int i=0; i<resultMap.values().size(); i++){
+            assertEquals("Note at max distance should be:", expectedNodesList.get(i), resultNodesList.get(i));
+        }
+        //ao remover o 7 há 4 possiveis caminhos mais longos
+        instance.remove(7);
+
+        expectedNodesList.clear();
+        expectedNodesList.add(8);
+        expectedNodesList.add(30);
+        expectedNodesList.add(8);
+        expectedNodesList.add(50);
+        expectedNodesList.add(13);
+        expectedNodesList.add(30);
+        expectedNodesList.add(13);
+        expectedNodesList.add(50);
+        expectedMaxDist = 5;
+        expectedMap.put(expectedMaxDist,expectedNodesList);
+
+        resultMap = instance.nodesAtMaxDistance();
+        resultMaxDist = (int) resultMap.keySet().toArray()[0];
+        resultNodesList = resultMap.get(resultMaxDist);
+
+        for (int i=0; i<resultMap.values().size(); i++){
+            assertEquals("Note at max distance should be:", expectedNodesList.get(i), resultNodesList.get(i));
+        }
+
     }
 }

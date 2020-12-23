@@ -186,6 +186,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
     */  
     protected int height(Node<E> node){
+        if(node == null){ return 0;}
         int leftHeight = 0;
         int rightHeight = 0;
 
@@ -200,12 +201,199 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         }
 
             return Math.max(rightHeight, leftHeight);
-    } 
-    
+    }
+
+
     /**
-    * Returns the smallest element within the tree.
-    * @return the smallest element within the tree
-    */
+     *
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public int distanceBetweenNodes(Node<E> node1, Node<E> node2){
+        if (node1 == null || node2 == null){
+            return 0;
+        }
+        int distance1 = depth( node1)-1; //distancia da root ao node1
+        int distance2 = depth(node2)-1; //distancia da root ao node2
+
+        Node<E> ancestor = commonAncestor(this.root(), node1, node2);
+
+        //se estão em subàrvores diferentes: distance1+distance2
+        if(ancestor.equals(this.root())){
+            return distance1+distance2;
+        }
+        //se estão na mesma subarvore, temos que tirar a distancia do antecessor á raiz porque não faz parte do percurso
+        else{
+            int distanceAncestor = depth(ancestor) -1;
+            return distance1+distance2 - 2*distanceAncestor;
+        }
+    }
+
+    /**
+     * Return the maximum distance between any two nodes of the tree
+     * @return
+     */
+    public int maxDistance() {
+
+        if (this.isEmpty()) {
+            return -1;
+        }else
+            return maxDistance(this.root());
+    }
+
+    /**
+     * Returns the maximum distance between any two nodes of the subtree rooted at Node node (recursively)
+     * @param node root of the subtree
+     * @return int containing the maximum distance between any two nodes of the subtree
+     */
+    public int maxDistance(Node<E> node)
+    {
+        if (node == null){ return 0;}
+        //caso a maxDistance inclua a root: maxDistance = leftHeight+rightHeight
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        if(node.getLeft()!= null)
+        leftHeight = height(node.getLeft())+1;
+
+        if(node.getRight() != null)
+        rightHeight = height(node.getRight())+1;
+
+        //caso a maxDistance nao inclua a root, temos de procurar a maxDistance da subarvore direita e/ou na subarvore esquerda
+        int leftMaxdDistance = maxDistance(node.getLeft());
+        int rightMaxDistance = maxDistance(node.getRight());
+
+        //retorna a maior das duas possibilidades
+        return Math.max(leftHeight + rightHeight , Math.max(leftMaxdDistance, rightMaxDistance));
+    }
+
+    /**
+     * Finds the max distance between any two nodes of the tree.
+     * @return Map<Integer, ArrayList<E> containing only one key, representing the maxDistance, and the value of that key
+     *          is a list of Nodes (in pairs) that have the maxDistance between them.
+     */
+    public HashMap<Integer, ArrayList<E>> nodesAtMaxDistance() {
+
+        HashMap<Integer, ArrayList<E>> results = new HashMap<>();
+        ArrayList<E> nodesAtMaxDist = new ArrayList<>();
+
+        //se root for null, devolve maxDistance = -1 e a lista de nodes vazia
+        if (this.isEmpty()) {
+            results.put(-1, nodesAtMaxDist);
+            return results;
+        }
+
+        int distance = 0;
+        int maxDistance = 0;
+
+
+        //lista com todos os nodes da àrvore
+        ArrayList<E> nodesInTree = (ArrayList<E>) this.inOrder();
+
+
+
+        //Compara todos os nodes da arvore entre eles para verificar quais são os que estão mais distantes
+        for (int i = 0; i < nodesInTree.size(); i++) {
+            for (int j = i; j < nodesInTree.size(); j++) {
+
+                distance = distanceBetweenNodes(new Node<E>(nodesInTree.get(i), null, null),
+                        new Node<E>(nodesInTree.get(j), null, null));
+
+                //quando encontra distancia igual ou maior que a distancia máxima há 2 opções:
+                // se for  igual à existente adiciona os 2 novos nodes ao resultado
+                if (distance == maxDistance) {
+                    nodesAtMaxDist.add(nodesInTree.get(i));
+                    nodesAtMaxDist.add(nodesInTree.get(j));
+                }
+                //se for maior que a existente, elimina os resultados antigos e adiciona os 2 novos nodes
+                else if (distance > maxDistance) {
+                    maxDistance = distance;
+                    nodesAtMaxDist.clear();
+                    nodesAtMaxDist.add(nodesInTree.get(i));
+                    nodesAtMaxDist.add(nodesInTree.get(j));
+                }
+            }
+        }
+
+        results.put(maxDistance, nodesAtMaxDist);
+        return results;
+
+    }
+
+    /**
+     * Finds the first common ancestor of nodeA and nodeB (recursively)
+     * @param node root of the tree/subtree to be searched
+     * @param nodeA
+     * @param nodeB
+     * @return node of the first/lowest common ancestor of node A and node B,
+     *          or
+     *          null if node A and nodeB are not part of the same tree(or one of the arguments are null)
+     */
+    public Node<E> commonAncestor(Node<E> node,Node<E> nodeA, Node<E> nodeB){
+        if (node == null ||nodeA == null || nodeB == null) { return null;}
+
+
+        //se algum dos dois nodes for a raiz da subarvore a procurar,
+        // então esse node é automaticamente antecessor comum
+        if(node.getElement().equals(nodeA.getElement())                 //antes da primeira iteração do método deveria ser validado
+             || node.getElement().equals(nodeB.getElement())){          //se os nodes pertencem à arvore através do metodo find (fora do método recursivo)
+            return node;                                                //para evitar retornar um antecessor quando um dos nodes nao pertence à arvore
+        }
+
+        //procura na subàrvove direita e esquerda do node
+        Node<E> nodeLeft = commonAncestor(node.getLeft(), nodeA,nodeB);
+        Node<E> nodeRight = commonAncestor(node.getRight(), nodeA, nodeB);
+
+        //Se este nodo encontrar correspondencia tanto na direita como na esquerda então é antecessor dos dois
+        if (nodeLeft != null && nodeRight != null){ return node; }
+        //caso só econtre um passa os retorna o encontrado para manter a cadeia de recursividade
+        if (nodeLeft != null){ return nodeLeft; }
+        if (nodeRight != null){ return nodeRight; }
+
+        return null;
+    }
+
+
+    /**
+     *
+     * @param nodeA
+     * @return
+     */
+    public int depth(Node<E> nodeA){
+        if (this.root() == null){
+            return -1;
+        }else{
+            return depth(this.root(), nodeA);
+        }
+    }
+    /**
+     *
+     * @param node
+     * @param nodeA
+     * @return
+     */
+    public int depth(Node<E> node, Node<E> nodeA){
+        if (node == null){ return 0;}
+
+            int x = 0;
+            //se a depth esquerda for maior que zero então entra no if e o valor fica no x
+            // se nao for, então é avaliada a depth da esquerda e o valor do x é sobrescristo
+            if ((node.getElement().equals(nodeA.getElement()))
+                    || (x = depth(node.getLeft(), nodeA)) > 0
+                    || (x = depth(node.getRight(), nodeA)) > 0) {
+                return x + 1;
+            }
+            return 0;
+    }
+
+
+
+
+        /**
+        * Returns the smallest element within the tree.
+        * @return the smallest element within the tree
+        */
     public E smallestElement(){
         if (this.isEmpty()) {return null;}
         return smallestElement(root);
@@ -241,10 +429,11 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     }
 
     /**
-     *
-     * @param lowerElement
-     * @param upperElement
-     * @return
+     * Method that finds and returns all the elements of the tree that are between 'lowerElement' and 'upperElement'
+     * Calls the recursive method with the same name
+     * @param lowerElement lower bound/limit
+     * @param upperElement upper bound/limit
+     * @return list containing all the elements that are between the upper and lower bounds.
      */
     public Iterable<E> findBetween(E lowerElement, E upperElement){
         if (lowerElement == null || upperElement == null){
@@ -255,7 +444,14 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         return results;
     }
 
-
+    /**
+     * Recursive method that fills the list 'results' with all the elements of the nodes of tree rooted at 'node' that
+     * are between lowerElement and upperElement.
+     * @param node roo of the tree/subtree to be searched
+     * @param lowerElement lower limit or bound, based on which the elements are added do the list
+     * @param upperElement upper limit or bound,  based on which the elements are added do the list
+     * @param results List containing all the elements of the tree that are between lowerLimit and upperLimit
+     */
   public void findBetween(Node<E> node, E lowerElement, E upperElement, List<E> results){
         if (node == null){
             return;
@@ -263,7 +459,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         if(node.getElement().compareTo(lowerElement) >= 0 && node.getElement().compareTo(upperElement) <= 0){
             results.add(node.getElement());
         }
-        //iterar por todos ou selecionar esquerda/direita consuante é maior/menor que um dos limites??
+        //iterar por todos ou selecionar esquerda/direita consoante é maior/menor que um dos limites??
         findBetween(node.getLeft(), lowerElement, upperElement, results);
         findBetween(node.getRight(), lowerElement, upperElement, results);
 
@@ -321,7 +517,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     }
     
 
-   /*
+   /**
    * Returns an iterable collection of elements of the tree, reported in in-order.
    * @return iterable collection of the tree's elements reported in in-order
    */
@@ -400,7 +596,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         }
     }
     
-    /*
+    /**
     * Returns a map with a list of nodes by each tree level.
     * @return a map with a list of nodes by each tree level
     */

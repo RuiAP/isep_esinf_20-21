@@ -1,10 +1,8 @@
 
 package PL;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -114,7 +112,8 @@ public class BSTTest {
         assertEquals("height should be = -1", instance.height(), -1);
         for(int idx=0; idx<arr.length; idx++){
             instance.insert(arr[idx]);
-            assertEquals("height should be = "+height[idx], instance.height(), height[idx]);            
+            assertEquals("height should be = "+height[idx], instance.height(), height[idx]);
+
         }
         instance = new BST();
         assertEquals("height should be = -1", instance.height(), -1);
@@ -215,5 +214,81 @@ public class BSTTest {
 
     }
 
+    @Test
+    public void testMaxDistance() {
+        System.out.println("testMaxDistance");
+        int expectedResult = 6;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
 
+        //diminuindo a altura do ramo direito
+        instance.remove(50);
+        instance.remove(30);
+        expectedResult = 5;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
+
+        //fazendo com que a maior distancia não inclua a raiz
+        instance.insert(18);
+        instance.insert(19);
+        expectedResult = 6;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
+
+        //se a àrvore estiver null
+        instance = new BST<>();
+        expectedResult = -1;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
+
+        //se a árvore for constituida só pela raiz
+        instance.insert(1);
+        expectedResult = 0;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
+
+        //se a árvore tiver raiz e um node
+        instance.insert(2);
+        expectedResult = 1;
+        assertEquals("Result should be:", expectedResult, instance.maxDistance());
+
+    }
+
+    @Test
+    public void testCommonAncestor() {
+        System.out.println("testCommonAncestor");
+        System.out.println(
+                instance.commonAncestor(instance.root(), new BST.Node<Integer>(new Integer(10), null, null), new BST.Node<Integer>(new Integer(15), null, null) ).getElement()
+        );
+        assertTrue(false);
+
+    }
+    @Test
+    public void testDistanceBetweenNodes() {
+        System.out.println("testDistanceBetweenNodes");
+
+        //distancia para a raiz deve ser zero
+        int expectedResult = 0;
+        int result = instance.distanceBetweenNodes(instance.root(), instance.root());
+        assertEquals("Result should be:", expectedResult, result);
+
+        //distancia entre a raiz e extremo direito
+        expectedResult = 2;
+        result = instance.distanceBetweenNodes(instance.root(),
+                                                new BST.Node<Integer>(new Integer(50), null, null));
+        assertEquals("Result should be:", expectedResult, result);
+
+        //distancia entre raiz e extremo esquerdo
+        expectedResult = 4;
+        result = instance.distanceBetweenNodes(instance.root(),
+                                                new BST.Node<Integer>(new Integer(7), null, null));
+        assertEquals("Result should be:", expectedResult, result);
+
+        //distancia entre extremo esquero e extremo direito
+        expectedResult = 6;
+        result = instance.distanceBetweenNodes(new BST.Node<Integer>(new Integer(7), null, null),
+                                                new BST.Node<Integer>(new Integer(50), null, null));
+        assertEquals("Result should be:", expectedResult, result);
+
+        //distancia entre dois nodes de uma subarvore
+        expectedResult = 3;
+        result = instance.distanceBetweenNodes(new BST.Node<Integer>(new Integer(7), null, null),
+                                                new BST.Node<Integer>(new Integer(13), null, null));
+        assertEquals("Result should be:", expectedResult, result);
+    }
 }

@@ -2,6 +2,7 @@ package tp3.model;
 
 import PL.BST;
 import PL.TREE_WORDS;
+import PL.TREE_WORDS_REP;
 import PL.TextWord;
 
 import java.io.BufferedReader;
@@ -16,7 +17,7 @@ public class CarregarFicheiro {
     private BST<S_ANumber> bstANumber;
     private BST<S_ElementName> bstElementName;
     private BST<S_Symbol> bstSymbol;
-    private TREE_WORDS bstConfig;
+    private TREE_WORDS_REP bstConfig;
 
     public static final String CSV_FILE_PATH = "src/main/resources/Periodic_Table_of_Elements.CSV";
     public static final int REPLACE_EMPTY = -1;
@@ -45,7 +46,7 @@ public class CarregarFicheiro {
         bstANumber = new BST<>();
         bstElementName = new BST<>();
         bstSymbol = new BST<>();
-        bstConfig = new TREE_WORDS();
+        bstConfig = new TREE_WORDS_REP();
     }
 
 
@@ -124,7 +125,7 @@ public class CarregarFicheiro {
                 S_Symbol s4 = new S_Symbol(pte);
                 bstSymbol.insert(s4);
 
-                TextWord t1 = new TextWord(dados[21], 1);
+                TextWord t1 = new TextWord(dados[21], 1); //neste caso são repetições e não ocorrências, por isso não deveria ser zero?
                 bstConfig.insert(t1);
             }
 
@@ -157,7 +158,7 @@ public class CarregarFicheiro {
         return bstSymbol;
     }
 
-    public TREE_WORDS getBstConfig() {
+    public TREE_WORDS_REP getBstConfig() {
         return bstConfig;
     }
 }
